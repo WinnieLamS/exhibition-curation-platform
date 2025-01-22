@@ -1,8 +1,20 @@
-import React from "react";
+import React, {useState} from "react";
 import { Link } from "react-router-dom";
+import { useUser } from "../contexts/UserContext";
 import "./../css/HomePage.css";
+import SignInSignUpCard from "./lowerComponents/SignInSignUpCard";
 
 const HomePage: React.FC = () => {
+  const { isLoggedIn } = useUser();
+  const [showSignInSignUp, setShowSignInSignUp] = useState(false);
+
+  const handleUserExhibitionsClick = (e: React.MouseEvent) => {
+    if (!isLoggedIn) {
+      e.preventDefault(); // Prevent navigation
+      setShowSignInSignUp(true); // Show the SignIn/SignUp card
+    }
+  };
+  
   return (
     <div className="homepage">
       <main className="main-content">
@@ -37,7 +49,11 @@ const HomePage: React.FC = () => {
           </Link>
         </div>
         <div className="image-links">
-          <Link to="/user-exhibitions" className="image-container">
+        <Link
+            to="/user-exhibitions"
+            className="image-container"
+            onClick={handleUserExhibitionsClick}
+          >
             <img
               src="/assets/user.png"
               alt="User Exhibitions"
@@ -47,6 +63,10 @@ const HomePage: React.FC = () => {
           </Link>
         </div>
       </main>
+      <SignInSignUpCard
+        visible={showSignInSignUp}
+        onClose={() => setShowSignInSignUp(false)}
+      />
     </div>
   );
 };
