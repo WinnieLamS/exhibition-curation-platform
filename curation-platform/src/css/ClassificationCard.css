@@ -1,0 +1,23 @@
+.classification-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+  
+}
+
+.classification-card:hover {
+  transform: scale(1.05);
+}
+
+.classification-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.classification-card h3 {
+  text-align: right;
+  margin: 5px 0 10px 0;
+}

@@ -1,0 +1,20 @@
+.classification-page {
+    padding: 20px;
+  }
+  
+  .objects-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    justify-items: center;
+  }
+  
+  .object-item {
+    text-align: center;
+  }
+  
+  .object-image {
+    width: 100%;
+    height: auto;
+  }
+  

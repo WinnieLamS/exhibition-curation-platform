@@ -16,7 +16,11 @@
 
 .main-content {
   flex: 1;
-  padding: 2rem;
+  padding: 5rem 0;
+  flex-direction: column;
+  align-items: center; /* Center the content */
+  justify-content: flex-start;
+  width: 100%; /* Ensure content spans full width */
 }
 
 .footer {
