@@ -1,37 +1,71 @@
 .classification-page {
-    padding: 20px;
-    text-align: center;
-  }
-  
-  .classification-page h2 {
-    margin-bottom: 20px; /* Optional: Add some spacing below the heading */
-    font-size: 1.5rem; /* Optional: Adjust font size as needed */
-  }
+  padding: 40px;
+  text-align: center;
+  margin: 0 0 50px 0;
+}
 
+.classification-page h2 {
+  margin-bottom: 20px; /* Optional: Add some spacing below the heading */
+  font-size: 1.5rem; /* Optional: Adjust font size as needed */
+}
 
-  .object-link {
-    text-decoration: none;
-    color: black;
-  }
+.object-link {
+  text-decoration: none;
+  color: black;
+}
 
-  .object-link:hover {
-    color: gray;
-  }
+.object-link:hover {
+  color: gray;
+}
 
-  .objects-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    justify-items: center;
-    margin: 0 15px;
-  }
-  
-  .object-item {
-    text-align: center;
-  }
-  
-  .object-image {
-    width: 100%;
-    height: auto;
-  }
-  
+.objects-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  justify-items: center;
+  margin: 15px 15px 50px 15px;
+}
+
+.object-item {
+  text-align: center;
+  margin: 15px 0;
+}
+
+.object-image {
+  width: 100%;
+  height: auto;
+}
+
+/* Unified style for selectors */
+.selector-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.selector-container label {
+  font-size: 1rem;
+}
+
+.selector-container select {
+  padding: 5px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Align "Objects per page" and "Sort by" on opposite sides */
+.page-controls {
+  display: flex;
+  justify-content: space-between; /* Push items to opposite sides */
+  align-items: center; /* Vertically align items */
+  margin-bottom: 20px;
+  flex-wrap: wrap; /* Allows wrapping on smaller screens */
+}
+
+.pagination-controls {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
