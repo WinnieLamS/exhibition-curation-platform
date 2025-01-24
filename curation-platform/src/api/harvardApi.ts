@@ -20,13 +20,6 @@ export const fetchHarvardData = async (resourceType: string, params: Record<stri
     // Build the full URL
     const url = `${BASE_URL}/${resourceType}`;
 
-    // Debugging logs
-    console.log("API Key:", API_KEY); // Verify API key
-    console.log("Request URL:", url); // Verify the constructed URL
-    console.log("Query Params:", queryParams); // Verify the query parameters
-    console.log("Environment Variables:", import.meta.env);
-
-
     // Make the GET request with query parameters
     const response = await axios.get(url, { params: queryParams });
 

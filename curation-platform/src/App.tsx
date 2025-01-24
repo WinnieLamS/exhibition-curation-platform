@@ -7,6 +7,7 @@ import MetCollectionPage from "./components/MetCollectionPage";
 import UserExhibitionsPage from "./components/UserExhibitionsPage";
 import Layout from "./components/lowerComponents/Layout";
 import ClassificationPage from "./components/lowerComponents/ClassificationPage";
+import ObjectPage from "./components/lowerComponents/ObjectPage";
 
 
 
@@ -19,6 +20,7 @@ const App: React.FC = () => {
           <Route index element={<HomePage />} />
           <Route path="/harvard-collection" element={<HarvardCollectionPage />} />
           <Route path="/classification/:id" element={<ClassificationPage />} />
+          <Route path="/object/:objectid" element={<ObjectPage />} />
           <Route path="met-collection" element={<MetCollectionPage />} />
           <Route path="user-exhibitions" element={<UserExhibitionsPage />} />
           <Route path="user" element={<UserPage />} />

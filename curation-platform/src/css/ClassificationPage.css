@@ -1,12 +1,29 @@
 .classification-page {
     padding: 20px;
+    text-align: center;
   }
   
+  .classification-page h2 {
+    margin-bottom: 20px; /* Optional: Add some spacing below the heading */
+    font-size: 1.5rem; /* Optional: Adjust font size as needed */
+  }
+
+
+  .object-link {
+    text-decoration: none;
+    color: black;
+  }
+
+  .object-link:hover {
+    color: gray;
+  }
+
   .objects-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
     justify-items: center;
+    margin: 0 15px;
   }
   
   .object-item {

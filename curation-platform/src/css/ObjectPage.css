@@ -1,0 +1,60 @@
+.object-page {
+  padding: 20px;
+  max-width: 1200px; /* Limit the maximum width of the page */
+  margin: 80px 50px; /* Center the page content */
+  font-family: Arial, sans-serif; /* Use a clean, modern font */
+}
+
+.object-header {
+  display: flex;
+  align-items: center; /* Align items vertically in the center */
+  justify-content: space-between; /* Space out the title and image */
+  margin-bottom: 20px; /* Reduce space to make room for the line */
+}
+
+.object-header h2 {
+  font-size: 2rem; /* Prominent title */
+  font-weight: bold;
+  text-align: left; /* Align text to the left */
+  flex: 1; /* Allow the title to take available space */
+  margin-right: 20px; /* Add space between title and image */
+}
+
+.object-image-container {
+  max-width: 400px; /* Limit the image container width */
+  text-align: center; /* Center the image within the container */
+}
+
+.object-image-container img {
+  max-width: 100%; /* Ensure the image is responsive */
+  height: auto;
+  border: 1px solid #ccc; /* Add a subtle border */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add some depth */
+}
+
+.separator-line {
+  width: 100%; /* Full width of the container */
+  height: 1px; /* Thin line */
+  background-color: #ddd; /* Light grey color */
+  margin: 20px 0; /* Add spacing above and below the line */
+  border: none; /* Remove default border for <hr> elements */
+}
+
+.object-details {
+  display: flex;
+  flex-direction: column; /* Arrange details in a column */
+  text-align: left; /* Align text to the left */
+  margin-top: 20px;
+}
+
+.object-details h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.object-details p {
+  margin-bottom: 15px;
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.6;
+}
