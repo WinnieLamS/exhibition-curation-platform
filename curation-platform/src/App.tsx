@@ -9,6 +9,7 @@ import ClassificationPage from "./components/lowerComponents/ClassificationPage"
 import ExhibitionList from "./components/lowerComponents/ExhibitionList";
 import ObjectPage from "./components/lowerComponents/ObjectPage";
 import { ClassificationProvider } from "./contexts/ClassificationContext";
+import CollectionList from "../src/components/lowerComponents/CollectionList";
 
 
 
@@ -26,6 +27,7 @@ const App: React.FC = () => {
           <Route path="met-collection" element={<MetCollectionPage />} />
           <Route path="/user-exhibitions" element={<ExhibitionList />} />
           <Route path="/user-page" element={<UserPage />} />
+          <Route path="/collection-list/:exhibitionId" element={<CollectionList />} />
         </Route>
       </Routes>
     </Router>

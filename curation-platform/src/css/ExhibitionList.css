@@ -1,0 +1,99 @@
+.exhibition-page {
+    padding: 40px;
+    text-align: center;
+    margin: 0 0 50px 0;
+  }
+  
+  .exhibition-page h2 {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+  }
+
+  .exhibition-page h3 {
+    margin-top: 20px;
+    margin-bottom: 0;
+    color: rgb(159, 159, 159);
+  }
+  
+  .object-link {
+    text-decoration: none;
+    color: black;
+  }
+  
+  .object-link:hover {
+    color: gray;
+  }
+  
+  .exhibitions-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 images per row by default */
+    gap: 20px;
+    justify-items: center;
+    margin: 15px 15px 50px 15px;
+  }
+  
+  .exhibition-item {
+    text-align: center;
+    margin: 15px 0;
+  }
+
+  
+  .exhibition-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    margin-bottom: 10px;
+  }
+  
+  .selector-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .selector-container label {
+    font-size: 1rem;
+  }
+  
+  .selector-container select {
+    padding: 5px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .page-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .pagination-controls {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  
+  /* Media Queries for responsiveness */
+  @media (max-width: 1200px) {
+    .exhibitions-list {
+      grid-template-columns: repeat(3, 1fr); /* 3 images per row for medium screens */
+    }
+  }
+  
+  @media (max-width: 900px) {
+    .exhibitions-list {
+      grid-template-columns: repeat(2, 1fr); /* 2 images per row for smaller screens */
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .exhibitions-list {
+      grid-template-columns: 1fr; /* 1 image per row for very small screens */
+    }
+  }
+  

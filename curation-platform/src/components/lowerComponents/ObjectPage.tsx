@@ -53,9 +53,22 @@ const ObjectPage: React.FC = () => {
 
   const handleAddToExhibition = async () => {
     if (!user || !selectedExhibition) return;
-    await addObjectToExhibition(user.id, selectedExhibition, object);
-    alert("✅ Object added to exhibition!");
+  
+    try {
+      // Add the object to the selected exhibition
+      await addObjectToExhibition(user.id, selectedExhibition, object);
+  
+      // Refresh exhibitions list to get the latest data
+      const updatedExhibitions = await getUserExhibitions(user.id);
+      setExhibitions(updatedExhibitions); // Update the exhibitions state
+  
+      alert("✅ Object added to exhibition!");
+    } catch (error) {
+      console.error("Error adding object to exhibition:", error);
+      alert("Error adding object to exhibition");
+    }
   };
+  
 
   const handleCreateExhibition = async () => {
     if (!user || !newExhibitionName) return;

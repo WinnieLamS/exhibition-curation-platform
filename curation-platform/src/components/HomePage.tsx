@@ -68,7 +68,7 @@ const HomePage: React.FC = () => {
             onClick={handleUserPageClick}
           >
             <img
-              src="/assets/user.png"
+              src="/assets/add.png"
               alt="User Page"
               className="link-image"
             />
