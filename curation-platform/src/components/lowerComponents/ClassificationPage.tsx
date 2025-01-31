@@ -115,8 +115,6 @@ const ClassificationPage: React.FC = () => {
   const handlePreviousPage = () => setPage(Math.max(page - 1, 1));
   const handleNextPage = () => setPage(Math.min(page + 1, totalPages));
 
-  if (loading) return <> </>;
-
   return (
     <div className="classification-page">
       <h2>{name}</h2>
@@ -172,7 +170,6 @@ const ClassificationPage: React.FC = () => {
 
           <hr className="separator-line" />
 
-          {/* Pagination */}
           <div className="pagination-controls">
           <button onClick={handlePreviousPage} disabled={page === 1}>
             Previous

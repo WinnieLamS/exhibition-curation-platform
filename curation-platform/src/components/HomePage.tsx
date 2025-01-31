@@ -1,13 +1,13 @@
 // import React, {useState} from "react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useUser } from "../contexts/UserContext";
 import "./../css/HomePage.css";
 import SignInSignUpCard from "./lowerComponents/SignInSignUpCard";
 
 
 const HomePage: React.FC = () => {
-  const { isLoggedIn, user } = useUser();
+  const { isLoggedIn, user, setUser } = useUser();
   const [showSignInSignUp, setShowSignInSignUp] = useState(false);
 
   const handleUserPageClick = (e: React.MouseEvent) => {
@@ -54,15 +54,15 @@ const HomePage: React.FC = () => {
         {isLoggedIn ? 
         (
           <Link to="/user-page" className="image-container">
-          <img
-            src={user?.avatar}
-            alt="User Page"
-            className="link-image"
-          />
-          <div className="overlay">User Page</div>
-        </Link> 
+            <img
+              src={user?.avatar}
+              alt="User Page"
+              className="link-image"
+            />
+            <div className="overlay">User Page</div>
+          </Link> 
         ):(
-        <Link
+          <Link
             to="/user-page"
             className="image-container"
             onClick={handleUserPageClick}
@@ -73,13 +73,15 @@ const HomePage: React.FC = () => {
               className="link-image"
             />
             <div className="overlay">User Page</div>
-          </Link>)}
+          </Link>
+        )}
         </div>
       </main>
       
       <SignInSignUpCard
         visible={showSignInSignUp}
         onClose={() => setShowSignInSignUp(false)}
+        setUser={setUser} // Pass the setUser function to update the user state after login
       />
     </div>
   );

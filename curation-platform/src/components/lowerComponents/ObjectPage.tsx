@@ -1,22 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { fetchHarvardData } from "../../api/harvardApi";
-// import { addObjectToExhibition, getUserExhibitions } from "../../firebase/firestore";
+import { addObjectToExhibition, getUserExhibitions, addUserExhibition } from "../../firebase/exhibitions";
 import { useUser } from "../../contexts/UserContext";
 import SignInSignUpCard from "../lowerComponents/SignInSignUpCard";
 import "../../css/ObjectPage.css";
 
 const ObjectPage: React.FC = () => {
   const { objectid } = useParams<{ objectid: string }>();
-  console.log("ObjectPage - objectid:", objectid);
-
-  const { user } = useUser();
+  const { user, setUser } = useUser();
   const [object, setObject] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [exhibitions, setExhibitions] = useState<any[]>([]);
   const [selectedExhibition, setSelectedExhibition] = useState<string>("");
-  const [showLogin, setShowLogin] = useState(false); 
+  const [showLogin, setShowLogin] = useState(false);
+  const [newExhibitionName, setNewExhibitionName] = useState<string>("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,8 +23,6 @@ const ObjectPage: React.FC = () => {
       setError(null);
       try {
         const data = await fetchHarvardData("object", { id: objectid });
-        console.log("ObjectPage - API Response:", data);
-
         if (data.records && data.records.length > 0) {
           setObject(data.records[0]);
         } else {
@@ -45,9 +42,9 @@ const ObjectPage: React.FC = () => {
 
   useEffect(() => {
     const loadExhibitions = async () => {
-      if (user) {
+      if (user?.id) {
         const userExhibitions = await getUserExhibitions(user.id);
-        setExhibitions(userExhibitions);
+        setExhibitions(userExhibitions || []);
       }
     };
 
@@ -60,17 +57,25 @@ const ObjectPage: React.FC = () => {
     alert("✅ Object added to exhibition!");
   };
 
+  const handleCreateExhibition = async () => {
+    if (!user || !newExhibitionName) return;
+    await addUserExhibition(user.id, newExhibitionName);
+    setNewExhibitionName(""); 
+    const updatedExhibitions = await getUserExhibitions(user.id);
+    setExhibitions(updatedExhibitions);
+  };
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return (
     <div className="object-page">
       <div className="object-header">
-        <h2>{object.title || "Untitled"}</h2>
+        <h2>{object?.title || "Untitled"}</h2>
         <div className="object-image-container">
           <img
-            src={object.primaryimageurl || "/placeholder.png"}
-            alt={object.title || "Artwork"}
+            src={object?.primaryimageurl || "/placeholder.png"}
+            alt={object?.title || "Artwork"}
           />
         </div>
       </div>
@@ -79,18 +84,33 @@ const ObjectPage: React.FC = () => {
 
       <div className="object-details">
         <h3>Description</h3>
-        <p>{object.description || "No description available."}</p>
-        <p><strong>Artist:</strong> {object.people?.[0]?.name || "Unknown"}</p>
-        <p><strong>Date:</strong> {object.dated || "Unknown"}</p>
-        <p><strong>Medium:</strong> {object.medium || "Unknown"}</p>
-        <p><strong>Dimensions:</strong> {object.dimensions || "Unknown"}</p>
+        <p>{object?.description || "No description available."}</p>
+        <p><strong>Artist:</strong> {object?.people?.[0]?.name || "Unknown"}</p>
+        <p><strong>Date:</strong> {object?.dated || "Unknown"}</p>
+        <p><strong>Medium:</strong> {object?.medium || "Unknown"}</p>
+        <p><strong>Dimensions:</strong> {object?.dimensions || "Unknown"}</p>
       </div>
+
+      <hr className="separator-line" />
 
       {user ? (
         <div className="add-to-exhibition">
-          <h3>Add to Exhibition</h3>
+           <Link to="/user-page" className="image-container">
+            <img
+              src={user?.avatar}
+              alt="User Page"
+              style={{
+                width: "100px",
+                height: "100px",
+                borderRadius: "50%",
+                cursor: "pointer",
+              }}
+              className="link-image"
+            />
+          </Link> 
+          <h3>Add Collection to Exhibition</h3>
           {exhibitions.length > 0 ? (
-            <>
+            <div className="exhibition-selection">
               <select value={selectedExhibition} onChange={(e) => setSelectedExhibition(e.target.value)}>
                 <option value="">Select Exhibition</option>
                 {exhibitions.map((exhibition) => (
@@ -102,9 +122,30 @@ const ObjectPage: React.FC = () => {
               <button onClick={handleAddToExhibition} disabled={!selectedExhibition}>
                 Add to Exhibition
               </button>
-            </>
+              <div>
+            
+              <div className="exhibition-selection"> 
+              <input
+                type="text"
+                value={newExhibitionName}
+                onChange={(e) => setNewExhibitionName(e.target.value)}
+                placeholder="Enter new exhibition name"
+              />
+              <button onClick={handleCreateExhibition}>Create New Exhibition</button>
+            </div>
+            </div>
+            </div>
           ) : (
-            <p>No exhibitions available. Create one in your profile.</p>
+            <div className="exhibition-selection">
+              <p>No exhibitions available. Create one below:</p>
+              <input
+                type="text"
+                value={newExhibitionName}
+                onChange={(e) => setNewExhibitionName(e.target.value)}
+                placeholder="Enter new exhibition name"
+              />
+              <button onClick={handleCreateExhibition}>Create New Exhibition</button>
+            </div>
           )}
         </div>
       ) : (
@@ -113,7 +154,14 @@ const ObjectPage: React.FC = () => {
         </p>
       )}
 
-      <SignInSignUpCard visible={showLogin} onClose={() => setShowLogin(false)} />
+      <SignInSignUpCard
+        visible={showLogin}
+        onClose={() => setShowLogin(false)}
+        setUser={setUser}
+        setShowLogin={setShowLogin}
+      />
+
+    <hr className="separator-line" />
 
       <div className="object-footer">
         <p>

@@ -9,9 +9,16 @@ import bunny from "../../assets/avatar/bunny.jpg";
 interface SignInSignUpCardProps {
   visible: boolean;
   onClose: () => void;
+  setUser: (user: any) => void; // Callback to set the user context or parent state
+  setShowLogin?: (show: boolean) => void; // Optional callback for managing modal visibility
 }
 
-const SignInSignUpCard: React.FC<SignInSignUpCardProps> = ({ visible, onClose }) => {
+
+const SignInSignUpCard: React.FC<SignInSignUpCardProps> = ({ 
+  visible,
+  onClose,
+  setUser,
+ }) => {
   const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -29,7 +36,7 @@ const SignInSignUpCard: React.FC<SignInSignUpCardProps> = ({ visible, onClose })
     try {
       const user = await signUpUser(email, password);
       console.log("User signed up successfully");
-      
+
       await setDoc(doc(db, "users", user.uid), {
         email: user.email,
         username: username,
@@ -38,21 +45,23 @@ const SignInSignUpCard: React.FC<SignInSignUpCardProps> = ({ visible, onClose })
       });
       console.log("User data stored in Firestore");
 
-      onClose();
-      navigate("/user-page");
+      onClose(); // Close the modal
+      navigate("/user-page"); // Redirect after sign-up
     } catch (err: any) {
       setError(err.message);
     }
   };
 
+
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await signInUser(email, password); 
+      const user = await signInUser(email, password); 
       console.log("User signed in successfully");
 
-      onClose();
-      navigate("/user-page");
+      onClose(); // Close the modal after sign-in
+      setUser(user); // Set user in the context
+
     } catch (err: any) {
       setError(err.message);
     }
