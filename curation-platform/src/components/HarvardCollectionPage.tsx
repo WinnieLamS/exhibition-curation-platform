@@ -1,6 +1,7 @@
-import React from "react";
+import React, {useEffect} from "react";
 import ClassificationCard from "../components/lowerComponents/ClassificationCard";
 import "./../css/HarvardCollectionPage.css";
+import { useLoading } from "../contexts/LoadingContext";
 
 const classifications = [
   { name: "Fragments ", id: 94 },
@@ -14,6 +15,23 @@ const classifications = [
 ];
 
 const HarvardCollectionPage: React.FC = () => {
+  const { setLoading } = useLoading();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        await new Promise((resolve) => setTimeout(resolve, 2000)); 
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+
+    return () => setLoading(false); 
+  }, [setLoading]);
+
   return (
     <div className="harvard-collection-page">
       <h2>Harvard Art Museums Collection</h2>

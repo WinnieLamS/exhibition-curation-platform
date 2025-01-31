@@ -19,7 +19,7 @@ const ClassificationCard: React.FC<ClassificationCardProps> = ({ name, id }) => 
         const data = await fetchHarvardData("object", {
           classification: id,
           page: 1,
-          size: 1, // Limit to one object
+          size: 1, 
         });
         const object = data.records?.[0];
         setImageUrl(object?.primaryimageurl || null);

@@ -5,8 +5,8 @@
 }
 
 .classification-page h2 {
-  margin-bottom: 20px; /* Optional: Add some spacing below the heading */
-  font-size: 1.5rem; /* Optional: Adjust font size as needed */
+  margin-bottom: 20px;
+  font-size: 1.5rem;
 }
 
 .object-link {
@@ -55,13 +55,12 @@
   border-radius: 4px;
 }
 
-/* Align "Objects per page" and "Sort by" on opposite sides */
 .page-controls {
   display: flex;
-  justify-content: space-between; /* Push items to opposite sides */
-  align-items: center; /* Vertically align items */
+  justify-content: space-between; 
+  align-items: center;
   margin-bottom: 20px;
-  flex-wrap: wrap; /* Allows wrapping on smaller screens */
+  flex-wrap: wrap;
 }
 
 .pagination-controls {

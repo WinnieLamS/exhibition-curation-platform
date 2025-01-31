@@ -1,17 +1,19 @@
-import React, {useState} from "react";
+// import React, {useState} from "react";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import { useUser } from "../contexts/UserContext";
 import "./../css/HomePage.css";
 import SignInSignUpCard from "./lowerComponents/SignInSignUpCard";
 
+
 const HomePage: React.FC = () => {
-  const { isLoggedIn } = useUser();
+  const { isLoggedIn, user } = useUser();
   const [showSignInSignUp, setShowSignInSignUp] = useState(false);
 
-  const handleUserExhibitionsClick = (e: React.MouseEvent) => {
+  const handleUserPageClick = (e: React.MouseEvent) => {
     if (!isLoggedIn) {
-      e.preventDefault(); // Prevent navigation
-      setShowSignInSignUp(true); // Show the SignIn/SignUp card
+      e.preventDefault(); 
+      setShowSignInSignUp(true); 
     }
   };
   
@@ -49,20 +51,32 @@ const HomePage: React.FC = () => {
           </Link>
         </div>
         <div className="image-links">
+        {isLoggedIn ? 
+        (
+          <Link to="/user-page" className="image-container">
+          <img
+            src={user?.avatar}
+            alt="User Page"
+            className="link-image"
+          />
+          <div className="overlay">User Page</div>
+        </Link> 
+        ):(
         <Link
-            to="/user-exhibitions"
+            to="/user-page"
             className="image-container"
-            onClick={handleUserExhibitionsClick}
+            onClick={handleUserPageClick}
           >
             <img
               src="/assets/user.png"
-              alt="User Exhibitions"
+              alt="User Page"
               className="link-image"
             />
-            <div className="overlay">User Exhibitions</div>
-          </Link>
+            <div className="overlay">User Page</div>
+          </Link>)}
         </div>
       </main>
+      
       <SignInSignUpCard
         visible={showSignInSignUp}
         onClose={() => setShowSignInSignUp(false)}
