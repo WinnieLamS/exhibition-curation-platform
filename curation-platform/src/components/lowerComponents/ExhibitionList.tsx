@@ -13,7 +13,7 @@ const ExhibitionList: React.FC = () => {
     const loadExhibitions = async () => {
       if (user) {
         const userExhibitions = await getUserExhibitions(user.id);
-        console.log("Fetched Exhibitions: ", userExhibitions); // Log fetched exhibitions
+      
         setExhibitions(userExhibitions);
       }
     };
@@ -32,8 +32,7 @@ const ExhibitionList: React.FC = () => {
 
   const handleDeleteExhibition = async (exhibitionId: string) => {
     if (!user) {
-      console.error("User is not logged in.");
-      return; // Exit the function if user is null
+      return;
     }
   
     const confirmDelete = window.confirm("Are you sure you want to delete the exhibition with all collections?");
@@ -44,28 +43,27 @@ const ExhibitionList: React.FC = () => {
     }
   };
 
-  // Function to get the first object image in an exhibition
+ 
   const getExhibitionImage = async (exhibitionId: string) => {
     if (!user?.id) {
       console.error("User ID is undefined");
-      return "/assets/add.png"; // Return default image if user ID is undefined
+      return "/assets/add.png"; 
     }
 
     try {
       const objects = await getObjectsInExhibition(user.id, exhibitionId);
-      console.log("Fetched Objects for Exhibition ID:", exhibitionId, objects); // Log the fetched objects
       if (objects.length > 0) {
-        return objects[0].imageUrl; // Return the image URL of the first object
+        return objects[0].imageUrl;
       } else {
-        return "/assets/add.png"; // Default image if no objects
+        return "/assets/add.png";
       }
     } catch (error) {
       console.error("Error fetching objects in exhibition:", error);
-      return "/assets/add.png"; // Return default image in case of error
+      return "/assets/add.png"; 
     }
   };
 
-  // State to store image URLs for each exhibition
+ 
   const [exhibitionImages, setExhibitionImages] = useState<{ [key: string]: string }>({});
 
   useEffect(() => {

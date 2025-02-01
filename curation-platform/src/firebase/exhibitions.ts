@@ -13,6 +13,7 @@ export const addObjectToExhibition = async (userId: string, exhibitionId: string
       
       // Add the new object to the objects array
       const updatedObjects = [...(exhibitionData?.objects || []), {
+        objectId: object.id,
         title: object.title,
         description: object.description,
         imageUrl: object.primaryimageurl,
@@ -42,10 +43,11 @@ export const getObjectsInExhibition = async (userId: string, exhibitionId: strin
     const exhibitionDoc = await getDoc(exhibitionRef);
 
     if (exhibitionDoc.exists()) {
-      // Ensure objects is always an array
-      return exhibitionDoc.data()?.objects || [];
+      const exhibitionData = exhibitionDoc.data();
+      console.log("Fetched Exhibition Data:", exhibitionData);
+      return exhibitionDoc.data()?.objects || []; 
     } else {
-      console.log("Exhibition does not exist.");
+      console.error(`Exhibition with ID ${exhibitionId} not found`);
       return [];
     }
   } catch (error) {
@@ -73,6 +75,35 @@ export const getUserExhibitions = async (userId: string) => {
   }
 };
 
+export const getExhibitionDetails = async (userId: string, exhibitionId: string) => {
+  try {
+    const exhibitionRef = doc(db, "users", userId, "exhibitions", exhibitionId);
+    const exhibitionDoc = await getDoc(exhibitionRef);
+
+    if (exhibitionDoc.exists()) {
+      const exhibitionData = exhibitionDoc.data();
+      // console.log(`Exhibition details for ${exhibitionId}:`, exhibitionData);
+
+     
+      return {
+        name: exhibitionData?.name || "Untitled Exhibition",
+        description: exhibitionData?.description || "No description available",
+      };
+    } else {
+      console.error(`Exhibition with ID ${exhibitionId} not found`);
+      return {
+        name: "Untitled Exhibition",
+        description: "No description available",
+      };
+    }
+  } catch (error) {
+    console.error("Error fetching exhibition details:", error);
+    return {
+      name: "Untitled Exhibition",
+      description: "No description available",
+    };
+  }
+};
 
 export const addUserExhibition = async (userId: string, exhibitionName: string) => {
   try {
@@ -124,4 +155,39 @@ export const updateExhibitionDescription = async (exhibitionId: string, newDescr
     console.error("Error updating exhibition description:", error);
   }
 };
+
+export const deleteObjectFromExhibition = async (userId: string, exhibitionId: string, objectId: string) => {
+  try {
+    const exhibitionRef = doc(db, "users", userId, "exhibitions", exhibitionId);
+    const exhibitionDoc = await getDoc(exhibitionRef);
+
+    if (exhibitionDoc.exists()) {
+      const exhibitionData = exhibitionDoc.data();
+      console.log("Exhibition data fetched for deletion:", exhibitionData);
+
+      const updatedObjects = exhibitionData?.objects.filter((object: any) => object.objectId !== objectId);
+
+     
+      console.log("Objects before update:", exhibitionData?.objects);
+      console.log("Updated objects after removal:", updatedObjects);
+
+     
+      await updateDoc(exhibitionRef, {
+        objects: updatedObjects, 
+      });
+
+      console.log("Object removed from exhibition successfully!");
+    } else {
+      console.error("Exhibition not found!");
+    }
+  } catch (error) {
+    console.error("Error removing object from exhibition:", error);
+  }
+};
+
+
+
+
+
+
 

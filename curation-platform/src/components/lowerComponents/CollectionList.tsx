@@ -1,27 +1,33 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { getObjectsInExhibition, updateExhibitionName } from "../../firebase/exhibitions";
+import { getObjectsInExhibition, getExhibitionDetails, deleteObjectFromExhibition } from "../../firebase/exhibitions"; 
+import { useUser } from "../../contexts/UserContext"; 
 
 const CollectionList: React.FC = () => {
   const { exhibitionId } = useParams<{ exhibitionId: string }>();
+  const { user } = useUser(); // Get the user context
   const [objects, setObjects] = useState<any[]>([]);
   const [exhibitionName, setExhibitionName] = useState<string>("");
   const [exhibitionDescription, setExhibitionDescription] = useState<string>("");
   const [newExhibitionName, setNewExhibitionName] = useState<string>("");
-  const [newExhibitionDescription, setNewExhibitionDescription] = useState<string>("");
+  // const [newExhibitionDescription, setNewExhibitionDescription] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchExhibitionData = async () => {
       try {
-        if (exhibitionId) {
-          const exhibitionObjects = await getObjectsInExhibition(exhibitionId);
+        if (exhibitionId && user?.id) { 
+          
+          const exhibitionObjects = await getObjectsInExhibition(user.id, exhibitionId);
+          // console.log("exhibitionId: ", exhibitionId);
+          
           setObjects(exhibitionObjects);
 
-          const exhibitionDetails = await getExhibitionDetails(exhibitionId);
-          setExhibitionName(exhibitionDetails.name);
-          setExhibitionDescription(exhibitionDetails.description);
+       
+          const exhibitionDetails = await getExhibitionDetails(user.id, exhibitionId);
+          setExhibitionName(exhibitionDetails.name || "Untitled Exhibition");
+          setExhibitionDescription(exhibitionDetails.description || "No description available.");
         }
       } catch (err) {
         setError("Failed to load exhibition details or objects.");
@@ -32,34 +38,43 @@ const CollectionList: React.FC = () => {
     };
 
     fetchExhibitionData();
-  }, [exhibitionId]);
-
-  const handleChangeExhibitionName = async () => {
-    if (newExhibitionName) {
-      await updateExhibitionName(exhibitionId, newExhibitionName);
-      setExhibitionName(newExhibitionName);
-      setNewExhibitionName("");
-    }
-  };
+  }, [exhibitionId, user?.id]);
 
   const handleRemoveCollection = async (objectId: string) => {
     try {
-      await deleteObjectFromExhibition(exhibitionId, objectId);
-      setObjects(objects.filter((obj) => obj.id !== objectId));
+      if (!user?.id || !exhibitionId) {
+        setError("User ID or Exhibition ID is missing.");
+        console.error("User ID or Exhibition ID is missing.");
+        return;
+      }
+      
+      console.log(`Attempting to remove object with ID: ${objectId}`);
+      await deleteObjectFromExhibition(user.id, exhibitionId, objectId);
+      setObjects((prevObjects) => {
+        console.log("Previous objects:", prevObjects);
+        const updatedObjects = prevObjects.filter((obj) => obj.objectId !== objectId);
+        console.log("Updated objects after removal:", updatedObjects);
+        return updatedObjects;
+      });
     } catch (error) {
       setError("Failed to remove object from exhibition.");
+      console.error("Error removing object from exhibition:", error);
     }
   };
+  
 
   if (loading) return <p>Loading exhibition data...</p>;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
-  return (
-    <div>
-      <h1>Collection for Exhibition {exhibitionName}</h1>
+  
 
-      <div>
-        <h3>Edit Exhibition Name</h3>
+  return (
+    
+    <div>
+      <h1>{exhibitionName}</h1>
+
+      {/* <div>
+        <h4>Edit Exhibition Name:</h4>
         <input
           type="text"
           value={newExhibitionName}
@@ -67,7 +82,7 @@ const CollectionList: React.FC = () => {
           placeholder="Enter new exhibition name"
         />
         <button onClick={handleChangeExhibitionName}>Change Exhibition Name</button>
-      </div>
+      </div> */}
 
       <div>
         <h3>Description</h3>
@@ -78,25 +93,24 @@ const CollectionList: React.FC = () => {
         <p>No objects in this exhibition yet.</p>
       ) : (
         <div>
-          <h3>Objects:</h3>
-          <ul>
+          <div>
             {objects.map((object) => (
-              <li key={object.id}>
-                <div>
-                  <Link to={`/object-page/${object.id}`}>
+              
+              <div key={object.objectId || object.id}>
+                <div>  
+                <Link to={`/object/${object.objectId}`} className="object-link">
                     <img
                       src={object.imageUrl || "/assets/placeholder.png"}
                       alt={object.title}
-                      style={{ width: "100px", height: "100px", borderRadius: "8px" }}
+                     
                     />
                   </Link>
                   <p>{object.title}</p>
-                  <p>{object.artist}</p>
-                  <button onClick={() => handleRemoveCollection(object.id)}>Remove from Exhibition</button>
+                  <button onClick={() => handleRemoveCollection(object.objectId)}>Remove from Exhibition</button>
                 </div>
-              </li>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
       )}
     </div>

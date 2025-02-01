@@ -55,8 +55,6 @@ const UserPage: React.FC = () => {
       setEditingProfile(false);
     }
   };
-
-  console.log(user);
   
   useEffect(() => {
     if (!user) {
