@@ -1,31 +1,32 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { getObjectsInExhibition, getExhibitionDetails, deleteObjectFromExhibition } from "../../firebase/exhibitions"; 
+import { getObjectsInExhibition, getExhibitionDetails, deleteObjectFromExhibition, updateExhibitionDescription, updateExhibitionName } from "../../firebase/exhibitions"; 
 import { useUser } from "../../contexts/UserContext"; 
+import "../../css/CollectionList.css";
+import { useLoading } from "../../contexts/LoadingContext";
 
 const CollectionList: React.FC = () => {
   const { exhibitionId } = useParams<{ exhibitionId: string }>();
-  const { user } = useUser(); // Get the user context
+  const { user } = useUser(); 
   const [objects, setObjects] = useState<any[]>([]);
   const [exhibitionName, setExhibitionName] = useState<string>("");
-  const [exhibitionDescription, setExhibitionDescription] = useState<string>("");
   const [newExhibitionName, setNewExhibitionName] = useState<string>("");
-  // const [newExhibitionDescription, setNewExhibitionDescription] = useState<string>("");
+  const [exhibitionDescription, setExhibitionDescription] = useState<string>("");
+  const [newDescription, setNewDescription] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [isEditing, setIsEditing] = useState<boolean>(false); 
+  const [isEditingName, setIsEditingName] = useState<boolean>(false);
+  const { setLoading } = useLoading();
 
   useEffect(() => {
     const fetchExhibitionData = async () => {
       try {
         if (exhibitionId && user?.id) { 
-          
           const exhibitionObjects = await getObjectsInExhibition(user.id, exhibitionId);
-          // console.log("exhibitionId: ", exhibitionId);
-          
           setObjects(exhibitionObjects);
 
-       
           const exhibitionDetails = await getExhibitionDetails(user.id, exhibitionId);
+          // console.log(exhibitionDetails);
           setExhibitionName(exhibitionDetails.name || "Untitled Exhibition");
           setExhibitionDescription(exhibitionDetails.description || "No description available.");
         }
@@ -48,71 +49,147 @@ const CollectionList: React.FC = () => {
         return;
       }
       
-      console.log(`Attempting to remove object with ID: ${objectId}`);
       await deleteObjectFromExhibition(user.id, exhibitionId, objectId);
-      setObjects((prevObjects) => {
-        console.log("Previous objects:", prevObjects);
-        const updatedObjects = prevObjects.filter((obj) => obj.objectId !== objectId);
-        console.log("Updated objects after removal:", updatedObjects);
-        return updatedObjects;
-      });
+      setObjects((prevObjects) => prevObjects.filter((obj) => obj.objectId !== objectId));
     } catch (error) {
       setError("Failed to remove object from exhibition.");
       console.error("Error removing object from exhibition:", error);
     }
   };
-  
 
-  if (loading) return <p>Loading exhibition data...</p>;
+  const handleAddDescription = async () => {
+    try {
+      if (!newDescription) {
+        return setNewDescription("Please enter a description.");
+      }
+      if (!exhibitionId) {
+        setError("Exhibition ID is missing.");
+        return;
+      }
+      if (!user) {
+        setError("User is missing.");
+        return;
+      }
+
+      await updateExhibitionDescription(user.id, exhibitionId, newDescription);
+      setExhibitionDescription(newDescription); 
+      setNewDescription(""); 
+      setIsEditing(false); 
+    } catch (error) {
+      setError("Failed to add description.");
+      console.error("Error adding description:", error);
+    }
+  };
+
+  const handleEditDescription = () => {
+    setIsEditing(true); 
+    setNewDescription(exhibitionDescription); 
+  };
+  const handleCancelEdit = () => {
+    setIsEditing(false); 
+    setNewDescription(exhibitionDescription);
+  };
+
+  const handleEditExhibitionName = () => {
+    setIsEditingName(true); 
+    setNewExhibitionName(exhibitionName); 
+  };
+
+  const handleCancelEditName = () => {
+    setIsEditingName(false); 
+    setNewExhibitionName(exhibitionName); 
+  };
+
+  const handleSaveExhibitionName = async () => {
+    try {
+      if (!newExhibitionName) {
+        setError("Exhibition name cannot be empty.");
+        return;
+      }
+      if (!user) {
+        setError("User is missing.");
+        return;
+      }
+      if (!exhibitionId) {
+        setError("exhibitionId is missing.");
+        return;
+      }
+      await updateExhibitionName(user.id, exhibitionId, newExhibitionName);
+      setExhibitionName(newExhibitionName); 
+      setIsEditingName(false);
+    } catch (error) {
+      setError("Failed to update exhibition name.");
+      console.error("Error updating exhibition name:", error);
+    }
+  };
+
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
-  
-
   return (
-    
-    <div>
-      <h1>{exhibitionName}</h1>
+    <div className="collection-list">
+      <div className="collection-header">
+        <h1>{exhibitionName}</h1>
+        {isEditingName ? (
+          <div>
+            <input
+              type="text"
+              value={newExhibitionName}
+              onChange={(e) => setNewExhibitionName(e.target.value)}
+              placeholder="Enter new exhibition name"
+            />
+            <button onClick={handleSaveExhibitionName}>Save</button>
+            <button onClick={handleCancelEditName}>Cancel</button>
+          </div>
+        ) : (
+          <button onClick={handleEditExhibitionName}>Edit Exhibition Name</button>
+        )}
+      </div>
 
-      {/* <div>
-        <h4>Edit Exhibition Name:</h4>
-        <input
-          type="text"
-          value={newExhibitionName}
-          onChange={(e) => setNewExhibitionName(e.target.value)}
-          placeholder="Enter new exhibition name"
-        />
-        <button onClick={handleChangeExhibitionName}>Change Exhibition Name</button>
-      </div> */}
-
-      <div>
-        <h3>Description</h3>
-        <p>{exhibitionDescription || "No description available."}</p>
+      <div className="collection-description">
+      {isEditing ? (
+  <div>
+    <input
+      type="text"
+      value={newDescription}
+      onChange={(e) => setNewDescription(e.target.value)}
+      placeholder="Enter new description"
+    />
+    <button onClick={handleAddDescription}>Save</button>
+    <button onClick={handleCancelEdit}>Cancel</button> 
+  </div>
+) : (
+  <div>
+    <p>{exhibitionDescription}</p>
+    <button onClick={handleEditDescription}>Edit Description</button>
+  </div>
+)}
       </div>
 
       {objects.length === 0 ? (
-        <p>No objects in this exhibition yet.</p>
+        <p className="empty-message">No objects in this exhibition yet.</p>
       ) : (
         <div>
-          <div>
-            {objects.map((object) => (
-              
-              <div key={object.objectId || object.id}>
-                <div>  
-                <Link to={`/object/${object.objectId}`} className="object-link">
-                    <img
-                      src={object.imageUrl || "/assets/placeholder.png"}
-                      alt={object.title}
-                     
-                    />
-                  </Link>
-                  <p>{object.title}</p>
-                  <button onClick={() => handleRemoveCollection(object.objectId)}>Remove from Exhibition</button>
-                </div>
-              </div>
-            ))}
-          </div>
+          {objects.map((object) => (
+            <div key={object.objectId} className="object-item">
+              <Link to={`/object/${object.objectId}`} className="object-link">
+                <img
+                  src={object.imageUrl || "/assets/placeholder.png"}
+                  alt={object.title}
+                  style={{ width: "100px", height: "100px", borderRadius: "8px" }}
+                />
+              </Link>
+              <p>{object.title}</p>
+              <button onClick={() => handleRemoveCollection(object.objectId)}>
+                Remove from Exhibition
+              </button>
+            </div>
+          ))}
         </div>
       )}
+
+      <div className="collection-footer">
+        <p>Manage your collection and remove objects as needed.</p>
+      </div>
     </div>
   );
 };

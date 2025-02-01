@@ -43,8 +43,8 @@ export const getObjectsInExhibition = async (userId: string, exhibitionId: strin
     const exhibitionDoc = await getDoc(exhibitionRef);
 
     if (exhibitionDoc.exists()) {
-      const exhibitionData = exhibitionDoc.data();
-      console.log("Fetched Exhibition Data:", exhibitionData);
+      // const exhibitionData = exhibitionDoc.data();
+      // console.log("Fetched Exhibition Data:", exhibitionData);
       return exhibitionDoc.data()?.objects || []; 
     } else {
       console.error(`Exhibition with ID ${exhibitionId} not found`);
@@ -86,6 +86,7 @@ export const getExhibitionDetails = async (userId: string, exhibitionId: string)
 
      
       return {
+        exhibitionId,
         name: exhibitionData?.name || "Untitled Exhibition",
         description: exhibitionData?.description || "No description available",
       };
@@ -108,11 +109,11 @@ export const getExhibitionDetails = async (userId: string, exhibitionId: string)
 export const addUserExhibition = async (userId: string, exhibitionName: string) => {
   try {
     const exhibitionsRef = collection(db, "users", userId, "exhibitions");
-    const newExhibitionRef = doc(exhibitionsRef); // Create a new document reference
+    const newExhibitionRef = doc(exhibitionsRef); 
     
     await setDoc(newExhibitionRef, {
-      name: exhibitionName, // Ensure exhibition name is passed correctly
-      objects: [], // Initialize with an empty objects array
+      name: exhibitionName, 
+      objects: [], 
     });
 
     console.log("New exhibition added:", exhibitionName);
@@ -121,20 +122,26 @@ export const addUserExhibition = async (userId: string, exhibitionName: string) 
   }
 };
 
-
 export const deleteExhibition = async (userId: string, exhibitionId: string) => {
   try {
     const exhibitionRef = doc(db, "users", userId, "exhibitions", exhibitionId);
     await deleteDoc(exhibitionRef);
-    console.log("Exhibition deleted successfully!");
+    // console.log("Exhibition deleted successfully!");
   } catch (error) {
     console.error("Error deleting exhibition:", error);
   }
 };
 
-export const updateExhibitionName = async (exhibitionId: string, newName: string) => {
+export const updateExhibitionName = async (userId: string, exhibitionId: string, newName: string) => {
   try {
-    const exhibitionRef = doc(db, "exhibitions", exhibitionId);
+    const exhibitionRef = doc(db, "users", userId, "exhibitions", exhibitionId);
+   
+    const exhibitionDoc = await getDoc(exhibitionRef);
+    if (!exhibitionDoc.exists()) {
+      console.error("Exhibition document not found");
+      return;
+    }
+
     await updateDoc(exhibitionRef, {
       name: newName,
     });
@@ -144,12 +151,23 @@ export const updateExhibitionName = async (exhibitionId: string, newName: string
   }
 };
 
-export const updateExhibitionDescription = async (exhibitionId: string, newDescription: string) => {
+
+export const updateExhibitionDescription = async (userId: string, exhibitionId: string, newDescription: string) => {
   try {
-    const exhibitionRef = doc(db, "exhibitions", exhibitionId);
+    const exhibitionRef = doc(db, "users", userId, "exhibitions", exhibitionId);
+    
+    const exhibitionDoc = await getDoc(exhibitionRef);
+    // console.log("Exhibition Document Data: ", exhibitionDoc.data());
+
+    if (!exhibitionDoc.exists()) {
+      console.error("Exhibition document not found");
+      return;
+    }
+
     await updateDoc(exhibitionRef, {
       description: newDescription,
     });
+
     console.log("Exhibition description updated");
   } catch (error) {
     console.error("Error updating exhibition description:", error);
@@ -158,32 +176,31 @@ export const updateExhibitionDescription = async (exhibitionId: string, newDescr
 
 export const deleteObjectFromExhibition = async (userId: string, exhibitionId: string, objectId: string) => {
   try {
+
     const exhibitionRef = doc(db, "users", userId, "exhibitions", exhibitionId);
+
     const exhibitionDoc = await getDoc(exhibitionRef);
 
     if (exhibitionDoc.exists()) {
       const exhibitionData = exhibitionDoc.data();
-      console.log("Exhibition data fetched for deletion:", exhibitionData);
 
-      const updatedObjects = exhibitionData?.objects.filter((object: any) => object.objectId !== objectId);
+      if (!exhibitionData?.objects) {
+        console.error("Objects field missing in the exhibition data.");
+        return;
+      }
 
-     
-      console.log("Objects before update:", exhibitionData?.objects);
-      console.log("Updated objects after removal:", updatedObjects);
+      const updatedObjects = exhibitionData.objects.filter((object: any) => object.objectId !== objectId);
 
-     
-      await updateDoc(exhibitionRef, {
-        objects: updatedObjects, 
-      });
-
-      console.log("Object removed from exhibition successfully!");
+      await updateDoc(exhibitionRef, { objects: updatedObjects });
     } else {
-      console.error("Exhibition not found!");
+      console.error("Exhibition document not found!");
     }
+
   } catch (error) {
-    console.error("Error removing object from exhibition:", error);
+    console.error("Error removing object from exhibition in Firestore:", error);
   }
 };
+
 
 
 

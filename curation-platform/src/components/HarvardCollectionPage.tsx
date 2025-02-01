@@ -5,12 +5,8 @@ import { useLoading } from "../contexts/LoadingContext";
 
 const classifications = [
   { name: "Fragments ", id: 94 },
-  { name: "Jewelry", id: 19 },
   { name: "Drawings", id: 21 },
-  { name: "Prints", id: 23 },
-  { name: "Photographs", id: 17 },
-  { name: "Sculpture", id: 30 },
-  { name: "Furniture", id: 76 },
+  { name: "Jewelry", id: 19 },
   { name: "Paintings", id: 26 },
 ];
 
