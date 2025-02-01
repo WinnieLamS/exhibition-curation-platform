@@ -100,7 +100,7 @@ const ExhibitionList: React.FC = () => {
                         className="exhibition-image"
                       />
                     </Link>
-                    <button onClick={() => handleDeleteExhibition(exhibition.id)}>Delete</button>
+                    <button onClick={() => handleDeleteExhibition(exhibition.id)}>Remove Exhibition</button>
                   </div>
                 </div>
               ))}

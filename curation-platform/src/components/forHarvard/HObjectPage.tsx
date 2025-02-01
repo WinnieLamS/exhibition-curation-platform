@@ -27,8 +27,10 @@ const HObjectPage: React.FC = () => {
       setError(null);
       try {
         const data = await fetchHarvardData("object", { id: objectid });
-        if (data.records && data.records.length > 0) {
-          setObject(data.records[0]);
+        if (data && data.records && data.records.length > 0) {
+          const fetchedObject = data.records[0];
+          // console.log("Fetched Object:", fetchedObject);
+          setObject(fetchedObject);
         } else {
           setError("Object not found.");
         }
@@ -38,11 +40,12 @@ const HObjectPage: React.FC = () => {
         setLoading(false);
       }
     };
-
+  
     if (objectid) {
       fetchData();
     }
   }, [objectid]);
+  
 
   useEffect(() => {
     const loadExhibitions = async () => {
@@ -56,22 +59,31 @@ const HObjectPage: React.FC = () => {
   }, [user]);
 
   const handleAddToExhibition = async () => {
-    if (!user || !selectedExhibition) return;
-
+    if (!user || !selectedExhibition || !object) return;
+  
+    const objectData = {
+      id: object.id || "", 
+      title: object.title || "Untitled",
+      description: object.description || "No description available.",
+      primaryimageurl: object.primaryimageurl || "/placeholder.png",
+      artist: object.people?.[0]?.name || "Unknown",
+      dated: object.dated || "Unknown",
+      source: 'harvard', 
+    };
+  
     try {
-      // Add the object to the selected exhibition
-      await addObjectToExhibition(user.id, selectedExhibition, object);
-
-      // Refresh exhibitions list to get the latest data
+      await addObjectToExhibition(user.id, selectedExhibition, objectData);
+  
       const updatedExhibitions = await getUserExhibitions(user.id);
-      setExhibitions(updatedExhibitions); // Update the exhibitions state
-
+      setExhibitions(updatedExhibitions);
       alert("Object added to exhibition!");
     } catch (error) {
       console.error("Error adding object to exhibition:", error);
       alert("Error adding object to exhibition");
     }
   };
+  
+  
 
   const handleCreateExhibition = async () => {
     if (!user || !newExhibitionName) return;

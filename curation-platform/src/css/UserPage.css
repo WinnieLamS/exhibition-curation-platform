@@ -1,66 +1,97 @@
+
 .user-page {
-    padding-top: 60px; 
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 60px; 
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+  min-height: 100vh; 
+}
+
+
+.user-container {
+  max-width: 1200px; 
+  width: 100%;
+  margin: 0 auto; 
+}
+
+.user-page img {
+  max-width: 100%;
+  height: auto;
+  margin: 10px 5px;
+}
+
+.user-page h3 {
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+
+.user-page .avatar {
+  display: block;
+  margin: 0 auto;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.user-page .form-group {
+  margin-bottom: 15px;
+}
+
+.user-page .button-group {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap; 
+  justify-content: center; 
+}
+
+.user-page button {
+  margin: 5px 10px 10px 0;
+  padding: 8px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #c7c7c7;
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+
+.user-page button:hover {
+  background-color: #1d1d1d;
+}
+
+.user-page .exhibition-list {
+  margin-top: 30px;
+}
+
+.user-page input {
+  margin: 5px 0 10px 0;
+  padding: 8px;
+  font-size: 16px;
+  width: 100%; 
+  max-width: 400px; 
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+@media (max-width: 768px) {
+  .user-page {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .user-page input {
+    width: 100%; 
+  }
+
+  .user-page .button-group {
+    flex-direction: column; 
+    align-items: center;
   }
 
   .user-container {
-    margin: 100px;
+    margin: 20px;
   }
-  
-  .user-page img {
-    max-width: 100%;
-    height: auto;
-    margin: 10px 5px;
-  }
-  
-  .user-page h3 {
-    margin-top: 20px;
-    margin-bottom: 0;
-  }
-  
-  .user-page .avatar {
-    display: block;
-    margin: 0 auto;
-    border-radius: 50%;
-    cursor: pointer;
-  }
-  
-  .user-page .form-group {
-    margin-bottom: 15px;
-  }
-  
-  .user-page .button-group {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .user-page button {
-    margin: 5px 10px 0 0;
-    padding: 5px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-  }
-  
-  .user-page button:hover {
-    background-color: #0056b3;
-  }
-  
-  .user-page .exhibition-list {
-    margin-top: 30px;
-  }
-  
-  .user-page input {
-    margin: 5px 0 10px 0;
-    padding: 8px;
-    font-size: 16px;
-    width: 30%;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-  }
-  
+}

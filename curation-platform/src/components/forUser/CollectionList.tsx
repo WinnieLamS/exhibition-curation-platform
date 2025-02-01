@@ -23,10 +23,10 @@ const CollectionList: React.FC = () => {
       try {
         if (exhibitionId && user?.id) { 
           const exhibitionObjects = await getObjectsInExhibition(user.id, exhibitionId);
+          console.log(exhibitionObjects);  // Log the fetched objects to check if 'source' is present
           setObjects(exhibitionObjects);
-
+  
           const exhibitionDetails = await getExhibitionDetails(user.id, exhibitionId);
-          // console.log(exhibitionDetails);
           setExhibitionName(exhibitionDetails.name || "Untitled Exhibition");
           setExhibitionDescription(exhibitionDetails.description || "No description available.");
         }
@@ -37,7 +37,7 @@ const CollectionList: React.FC = () => {
         setLoading(false);
       }
     };
-
+  
     fetchExhibitionData();
   }, [exhibitionId, user?.id]);
 
@@ -126,8 +126,8 @@ const CollectionList: React.FC = () => {
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return (
-    <div className="collection-list">
-      <div className="collection-header">
+    <div className="custom-collection-list">
+      <div className="custom-collection-header">
         <h1>{exhibitionName}</h1>
         {isEditingName ? (
           <div>
@@ -144,54 +144,65 @@ const CollectionList: React.FC = () => {
           <button onClick={handleEditExhibitionName}>Edit Exhibition Name</button>
         )}
       </div>
-
-      <div className="collection-description">
-      {isEditing ? (
-  <div>
-    <input
-      type="text"
-      value={newDescription}
-      onChange={(e) => setNewDescription(e.target.value)}
-      placeholder="Enter new description"
-    />
-    <button onClick={handleAddDescription}>Save</button>
-    <button onClick={handleCancelEdit}>Cancel</button> 
-  </div>
+  
+      <div className="custom-collection-description">
+        {isEditing ? (
+          <div>
+            <input
+              type="text"
+              value={newDescription}
+              onChange={(e) => setNewDescription(e.target.value)}
+              placeholder="Enter new description"
+            />
+            <button onClick={handleAddDescription}>Save</button>
+            <button onClick={handleCancelEdit}>Cancel</button>
+          </div>
+        ) : (
+          <div>
+            <p>{exhibitionDescription}</p>
+            <button onClick={handleEditDescription}>Edit Description</button>
+          </div>
+        )}
+      </div>
+  
+      {objects.length === 0 ? (
+  <p className="custom-empty-message">No objects in this exhibition yet.</p>
 ) : (
   <div>
-    <p>{exhibitionDescription}</p>
-    <button onClick={handleEditDescription}>Edit Description</button>
+    {objects.map((object) => {
+      // console.log(`Object ID: ${object.objectId}, Source: ${object.source}`); 
+      const linkPath = object.source === 'met' 
+        ? `/Mobject/${object.objectId}` 
+        : `/Hobject/${object.objectId}`;
+
+      // console.log(`Link Path: ${linkPath}`); 
+
+      return (
+        <div key={object.objectId} className="custom-object-item">
+          <Link to={linkPath} className="custom-object-link">
+            <img
+              src={object.imageUrl || "/assets/placeholder.png"}
+              alt={object.title}
+              className="custom-object-image"
+            />
+          </Link>
+          <p>{object.title}</p>
+          <button onClick={() => handleRemoveCollection(object.objectId)}>
+            Remove from Exhibition
+          </button>
+        </div>
+      );
+    })}
   </div>
 )}
-      </div>
 
-      {objects.length === 0 ? (
-        <p className="empty-message">No objects in this exhibition yet.</p>
-      ) : (
-        <div>
-          {objects.map((object) => (
-            <div key={object.objectId} className="object-item">
-              <Link to={`/object/${object.objectId}`} className="object-link">
-                <img
-                  src={object.imageUrl || "/assets/placeholder.png"}
-                  alt={object.title}
-                  style={{ width: "100px", height: "100px", borderRadius: "8px" }}
-                />
-              </Link>
-              <p>{object.title}</p>
-              <button onClick={() => handleRemoveCollection(object.objectId)}>
-                Remove from Exhibition
-              </button>
-            </div>
-          ))}
-        </div>
-      )}
-
-      <div className="collection-footer">
+  
+      <div className="custom-collection-footer">
         <p>Manage your collection and remove objects as needed.</p>
       </div>
     </div>
   );
+  
 };
 
 export default CollectionList;

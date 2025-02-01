@@ -10,21 +10,25 @@ export const addObjectToExhibition = async (userId: string, exhibitionId: string
     if (exhibitionDoc.exists()) {
       const exhibitionData = exhibitionDoc.data();
       
-      const updatedObjects = [...(exhibitionData?.objects || []), {
-        objectId: object.id,
-        title: object.title,
-        description: object.description,
-        imageUrl: object.primaryimageurl,
-        artist: object.people?.[0]?.name || "Unknown",
-        date: object.dated || "Unknown",
-      }];
-      
+      const updatedObjects = [
+        ...(exhibitionData?.objects || []),
+        {
+          objectId: object.id,
+          title: object.title,
+          description: object.description,
+          imageUrl: object.primaryimageurl || object.primaryImage || "/placeholder.png", // Handle different image fields
+          artist: object.people?.[0]?.name || object.artistDisplayName || "Unknown", // Handle artist info
+          date: object.dated || object.objectDate || "Unknown",
+          source: object.source || 'unknown', 
+        }
+      ];
+
       await setDoc(exhibitionRef, {
         name: exhibitionData?.name, 
         objects: updatedObjects,
       });
 
-      // console.log("Object added to exhibition successfully!");
+      console.log("Object added to exhibition successfully!");
     } else {
       console.error("Exhibition not found!");
     }
@@ -38,13 +42,12 @@ export const getObjectsInExhibition = async (userId: string, exhibitionId: strin
   try {
     const exhibitionRef = doc(db, "users", userId, "exhibitions", exhibitionId);
     const exhibitionDoc = await getDoc(exhibitionRef);
-
+    
     if (exhibitionDoc.exists()) {
-      // const exhibitionData = exhibitionDoc.data();
-      // console.log("Fetched Exhibition Data:", exhibitionData);
-      return exhibitionDoc.data()?.objects || []; 
+      const exhibitionData = exhibitionDoc.data();
+      return exhibitionData?.objects || [];
     } else {
-      console.error(`Exhibition with ID ${exhibitionId} not found`);
+      console.error("Exhibition not found!");
       return [];
     }
   } catch (error) {

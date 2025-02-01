@@ -62,6 +62,7 @@ const MObjectPage: React.FC = () => {
         primaryimageurl: object.primaryImage || "/placeholder.png", 
         artist: object.artistDisplayName || "Unknown", 
         dated: object.objectDate || "Unknown", 
+        source: 'met',
       };
   
       await addObjectToExhibition(user.id, selectedExhibition, objectData);
