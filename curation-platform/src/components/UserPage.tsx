@@ -5,14 +5,14 @@ import { signOutUser } from "../firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { doc, setDoc } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import ExhibitionList from "../components/lowerComponents/ExhibitionList";
+import ExhibitionList from "./forUser/ExhibitionList";
 import bunny from "../assets/avatar/bunny.jpg";
 import kitten from "../assets/avatar/kitten.jpg";
 import piggy from "../assets/avatar/piggy.jpg";
 import puppy from "../assets/avatar/puppy.jpeg";
 import guieaPig from "../assets/avatar/guineaPig.jpg";
 import { db } from "../firebase/firebaseConfig";
-import "../css/UserPage.css"
+import "../css/UserPage.css";
 
 const UserPage: React.FC = () => {
   const { user, setUser } = useUser();
@@ -28,7 +28,7 @@ const UserPage: React.FC = () => {
     await signOutUser();
     setUser(null);
     alert("You have successfully logged out.");
-    navigate("/"); 
+    navigate("/");
   };
 
   const handleSaveProfile = async () => {
@@ -55,7 +55,7 @@ const UserPage: React.FC = () => {
       setEditingProfile(false);
     }
   };
-  
+
   useEffect(() => {
     if (!user) {
       navigate("/");
@@ -67,7 +67,7 @@ const UserPage: React.FC = () => {
   return (
     <div className="user-page">
       {error && <p style={{ color: "red" }}>{error}</p>}
-
+      <div className="user-container">
       <img
         src={selectedAvatar}
         alt="User Avatar"
@@ -154,11 +154,15 @@ const UserPage: React.FC = () => {
 
           <div>
             <button onClick={handleSaveProfile}>Save</button>
-            <button onClick={() => {
-              setEditingProfile(false);
-              setNewUsername(user?.username || "");
-              setSelectedAvatar(user?.avatar || bunny);
-            }}>Cancel</button>
+            <button
+              onClick={() => {
+                setEditingProfile(false);
+                setNewUsername(user?.username || "");
+                setSelectedAvatar(user?.avatar || bunny);
+              }}
+            >
+              Cancel
+            </button>
           </div>
         </>
       ) : (
@@ -175,6 +179,7 @@ const UserPage: React.FC = () => {
           </div>
         </>
       )}
+      </div>
 
       <ExhibitionList />
     </div>

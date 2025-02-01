@@ -22,7 +22,7 @@ const HomePage: React.FC = () => {
       <main className="main-content">
       {isLoggedIn ? 
         (
-          <Link to="/user-page" className="image-container">
+          <Link to="/user-page" className="user-image-container">
             <img
               src={user?.avatar}
               alt="User Page"
@@ -32,14 +32,14 @@ const HomePage: React.FC = () => {
                 borderRadius: "50%",
                 cursor: "pointer",
               }}
-              className="link-image"
+              className="user-link-image"
             />
             <div className="overlay">User Page</div>
           </Link> 
         ):(
           <Link
             to="/user-page"
-            className="image-container"
+            className="user-image-container"
             onClick={handleUserPageClick}
           >
             <img
@@ -51,11 +51,18 @@ const HomePage: React.FC = () => {
                 borderRadius: "50%",
                 cursor: "pointer",
               }}
-              className="link-image"
+              className="user-link-image"
             />
-            <div className="overlay">User Page</div>
           </Link>
         )}
+        <div>
+          {user?(
+            <h3>Hello {user.username}!</h3>
+          ):(
+            <h3>Sign in / Sign up</h3>
+          )}
+        </div>
+        <hr className="separator-line" />
         <div className="image-links">
           <Link to="/met-collection" className="image-container">
             <img
@@ -85,9 +92,6 @@ const HomePage: React.FC = () => {
                 className="link-image"/>
             </div>
           </Link>
-        </div>
-        
-        <div className="image-links">
         </div>
       </main>
       

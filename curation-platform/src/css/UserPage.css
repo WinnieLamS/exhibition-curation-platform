@@ -4,6 +4,10 @@
     padding-right: 20px;
     padding-bottom: 20px;
   }
+
+  .user-container {
+    margin: 100px;
+  }
   
   .user-page img {
     max-width: 100%;

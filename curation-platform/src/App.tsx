@@ -9,8 +9,8 @@ import HarvardCollectionPage from "./components/HarvardCollectionPage";
 import ClassificationPage from "./components/forHarvard/ClassificationPage";
 import MetObjectPage from "./components/forMet/MObjectPage";
 import HarvardObjectPage from "./components/forHarvard/HObjectPage";
-import ExhibitionList from "./components/lowerComponents/ExhibitionList";
-import CollectionList from "../src/components/lowerComponents/CollectionList";
+import ExhibitionList from "./components/forUser/ExhibitionList";
+import CollectionList from "./components/forUser/CollectionList";
 
 const App: React.FC = () => {
   return (
