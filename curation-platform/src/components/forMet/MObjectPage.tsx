@@ -6,7 +6,7 @@ import { useUser } from "../../contexts/UserContext";
 import SignInSignUpCard from "../lowerComponents/SignInSignUpCard";
 import "../../css/ObjectPage.css"; 
 
-const ObjectPage: React.FC = () => {
+const MObjectPage: React.FC = () => {
   const { objectid } = useParams<{ objectid: string }>();
   const { user, setUser } = useUser();
   const [object, setObject] = useState<any>(null);
@@ -52,10 +52,20 @@ const ObjectPage: React.FC = () => {
   }, [user]);
 
   const handleAddToExhibition = async () => {
-    if (!user || !selectedExhibition) return;
-
+    if (!user || !selectedExhibition || !object) return;
+  
     try {
-      await addObjectToExhibition(user.id, selectedExhibition, object);
+      const objectData = {
+        id: object.objectID || "", 
+        title: object.title || "Untitled", 
+        description: object.description || "No description available.", 
+        primaryimageurl: object.primaryImage || "/placeholder.png", 
+        artist: object.artistDisplayName || "Unknown", 
+        dated: object.objectDate || "Unknown", 
+      };
+  
+      await addObjectToExhibition(user.id, selectedExhibition, objectData);
+  
       const updatedExhibitions = await getUserExhibitions(user.id);
       setExhibitions(updatedExhibitions);
       alert("Object added to exhibition!");
@@ -64,6 +74,8 @@ const ObjectPage: React.FC = () => {
       alert("Error adding object to exhibition");
     }
   };
+  
+  
 
   const handleCreateExhibition = async () => {
     if (!user || !newExhibitionName) return;
@@ -210,4 +222,4 @@ const ObjectPage: React.FC = () => {
   );
 };
 
-export default ObjectPage;
+export default MObjectPage;

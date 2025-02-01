@@ -108,7 +108,6 @@ const MetCollectionPage = () => {
       {loading && <p>Loading...</p>}
   
       <div className="met-objects-list">
-        {/* Display objects */}
         {objects.length > 0 ? (
           objects.map((object) => (
             <div key={object.objectID} className="met-object-item">

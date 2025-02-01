@@ -10,7 +10,7 @@ import { useUser } from "../../contexts/UserContext";
 import SignInSignUpCard from "../lowerComponents/SignInSignUpCard";
 import "../../css/ObjectPage.css";
 
-const ObjectPage: React.FC = () => {
+const HObjectPage: React.FC = () => {
   const { objectid } = useParams<{ objectid: string }>();
   const { user, setUser } = useUser();
   const [object, setObject] = useState<any>(null);
@@ -218,4 +218,4 @@ const ObjectPage: React.FC = () => {
   );
 };
 
-export default ObjectPage;
+export default HObjectPage;

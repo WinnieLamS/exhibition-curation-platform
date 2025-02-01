@@ -18,7 +18,7 @@ export const fetchMetData = async (
         },
       });
 
-      console.log(`Successfully fetched ${resourceType} data`, response.data);
+      // console.log(`Successfully fetched ${resourceType} data`, response.data);
       return response.data;
     } catch (error: any) {
       attempts++;

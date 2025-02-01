@@ -8,10 +8,8 @@ export const addObjectToExhibition = async (userId: string, exhibitionId: string
     const exhibitionDoc = await getDoc(exhibitionRef);
 
     if (exhibitionDoc.exists()) {
-      // Retrieve the existing exhibition data
       const exhibitionData = exhibitionDoc.data();
       
-      // Add the new object to the objects array
       const updatedObjects = [...(exhibitionData?.objects || []), {
         objectId: object.id,
         title: object.title,
@@ -21,13 +19,12 @@ export const addObjectToExhibition = async (userId: string, exhibitionId: string
         date: object.dated || "Unknown",
       }];
       
-      // Update the exhibition, keeping the name intact
       await setDoc(exhibitionRef, {
-        name: exhibitionData?.name, // Preserve the exhibition name
+        name: exhibitionData?.name, 
         objects: updatedObjects,
       });
 
-      console.log("Object added to exhibition successfully!");
+      // console.log("Object added to exhibition successfully!");
     } else {
       console.error("Exhibition not found!");
     }
@@ -64,8 +61,8 @@ export const getUserExhibitions = async (userId: string) => {
 
     const exhibitionsList = exhibitionsSnapshot.docs.map((doc) => ({
       id: doc.id,
-      name: doc.data()?.name || "Untitled Exhibition", // Default name if no name exists
-      objects: doc.data()?.objects || [], // Ensure we always have an array, even if it's empty
+      name: doc.data()?.name || "Untitled Exhibition", 
+      objects: doc.data()?.objects || [], 
     }));
 
     return exhibitionsList;
@@ -145,7 +142,7 @@ export const updateExhibitionName = async (userId: string, exhibitionId: string,
     await updateDoc(exhibitionRef, {
       name: newName,
     });
-    console.log("Exhibition name updated");
+    // console.log("Exhibition name updated");
   } catch (error) {
     console.error("Error updating exhibition name:", error);
   }
@@ -168,7 +165,7 @@ export const updateExhibitionDescription = async (userId: string, exhibitionId: 
       description: newDescription,
     });
 
-    console.log("Exhibition description updated");
+    // console.log("Exhibition description updated");
   } catch (error) {
     console.error("Error updating exhibition description:", error);
   }
