@@ -1,5 +1,5 @@
-import React, {useEffect} from "react";
-import ClassificationCard from "../components/lowerComponents/ClassificationCard";
+import React, { useEffect } from "react";
+import ClassificationCard from "./forHarvard/ClassificationCard";
 import "./../css/HarvardCollectionPage.css";
 import { useLoading } from "../contexts/LoadingContext";
 
@@ -17,7 +17,7 @@ const HarvardCollectionPage: React.FC = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        await new Promise((resolve) => setTimeout(resolve, 2000)); 
+        await new Promise((resolve) => setTimeout(resolve, 2000));
       } finally {
         setLoading(false);
       }
@@ -25,7 +25,7 @@ const HarvardCollectionPage: React.FC = () => {
 
     fetchData();
 
-    return () => setLoading(false); 
+    return () => setLoading(false);
   }, [setLoading]);
 
   return (

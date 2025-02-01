@@ -1,0 +1,84 @@
+/* Met Collection page styles */
+.met-container {
+  padding: 40px;
+  text-align: center;
+  margin: 0 0 50px 0;
+}
+
+.met-object-link{
+  text-decoration: none;
+  color: black;
+}
+
+.met-container h1 {
+  margin-bottom: 20px;
+  font-size: 2rem;
+}
+
+.met-selector-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.met-selector-container label {
+  font-size: 1rem;
+}
+
+.met-selector-container select {
+  padding: 5px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.met-objects-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  justify-items: center;
+  margin: 15px 15px 50px 15px;
+}
+
+.met-object-item {
+  text-align: center;
+  margin: 15px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.met-object-image {
+  width: 100%;
+  height: auto;
+  max-height: 400px;
+  object-fit: contain;
+}
+
+.met-pagination-controls {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.met-page-button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.met-page-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.met-page-button:hover:not(:disabled) {
+  background-color: #45a049;
+}

@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { fetchHarvardData } from "../../api/harvardApi";
-import { addObjectToExhibition, getUserExhibitions, addUserExhibition } from "../../firebase/exhibitions";
+import {
+  addObjectToExhibition,
+  getUserExhibitions,
+  addUserExhibition,
+} from "../../firebase/exhibitions";
 import { useUser } from "../../contexts/UserContext";
 import SignInSignUpCard from "../lowerComponents/SignInSignUpCard";
 import "../../css/ObjectPage.css";
@@ -53,27 +57,26 @@ const ObjectPage: React.FC = () => {
 
   const handleAddToExhibition = async () => {
     if (!user || !selectedExhibition) return;
-  
+
     try {
       // Add the object to the selected exhibition
       await addObjectToExhibition(user.id, selectedExhibition, object);
-  
+
       // Refresh exhibitions list to get the latest data
       const updatedExhibitions = await getUserExhibitions(user.id);
       setExhibitions(updatedExhibitions); // Update the exhibitions state
-  
-      alert("✅ Object added to exhibition!");
+
+      alert("Object added to exhibition!");
     } catch (error) {
       console.error("Error adding object to exhibition:", error);
       alert("Error adding object to exhibition");
     }
   };
-  
 
   const handleCreateExhibition = async () => {
     if (!user || !newExhibitionName) return;
     await addUserExhibition(user.id, newExhibitionName);
-    setNewExhibitionName(""); 
+    setNewExhibitionName("");
     const updatedExhibitions = await getUserExhibitions(user.id);
     setExhibitions(updatedExhibitions);
   };
@@ -92,23 +95,31 @@ const ObjectPage: React.FC = () => {
           />
         </div>
       </div>
-      
+
       <hr className="separator-line" />
 
       <div className="object-details">
         <h3>Description</h3>
         <p>{object?.description || "No description available."}</p>
-        <p><strong>Artist:</strong> {object?.people?.[0]?.name || "Unknown"}</p>
-        <p><strong>Date:</strong> {object?.dated || "Unknown"}</p>
-        <p><strong>Medium:</strong> {object?.medium || "Unknown"}</p>
-        <p><strong>Dimensions:</strong> {object?.dimensions || "Unknown"}</p>
+        <p>
+          <strong>Artist:</strong> {object?.people?.[0]?.name || "Unknown"}
+        </p>
+        <p>
+          <strong>Date:</strong> {object?.dated || "Unknown"}
+        </p>
+        <p>
+          <strong>Medium:</strong> {object?.medium || "Unknown"}
+        </p>
+        <p>
+          <strong>Dimensions:</strong> {object?.dimensions || "Unknown"}
+        </p>
       </div>
 
       <hr className="separator-line" />
 
       {user ? (
         <div className="add-to-exhibition">
-           <Link to="/user-page" className="image-container">
+          <Link to="/user-page" className="image-container">
             <img
               src={user?.avatar}
               alt="User Page"
@@ -120,11 +131,14 @@ const ObjectPage: React.FC = () => {
               }}
               className="link-image"
             />
-          </Link> 
+          </Link>
           <h3>Add Collection to Exhibition</h3>
           {exhibitions.length > 0 ? (
             <div className="exhibition-selection">
-              <select value={selectedExhibition} onChange={(e) => setSelectedExhibition(e.target.value)}>
+              <select
+                value={selectedExhibition}
+                onChange={(e) => setSelectedExhibition(e.target.value)}
+              >
                 <option value="">Select Exhibition</option>
                 {exhibitions.map((exhibition) => (
                   <option key={exhibition.id} value={exhibition.id}>
@@ -132,21 +146,25 @@ const ObjectPage: React.FC = () => {
                   </option>
                 ))}
               </select>
-              <button onClick={handleAddToExhibition} disabled={!selectedExhibition}>
+              <button
+                onClick={handleAddToExhibition}
+                disabled={!selectedExhibition}
+              >
                 Add to Exhibition
               </button>
               <div>
-            
-              <div className="exhibition-selection"> 
-              <input
-                type="text"
-                value={newExhibitionName}
-                onChange={(e) => setNewExhibitionName(e.target.value)}
-                placeholder="Enter new exhibition name"
-              />
-              <button onClick={handleCreateExhibition}>Create New Exhibition</button>
-            </div>
-            </div>
+                <div className="exhibition-selection">
+                  <input
+                    type="text"
+                    value={newExhibitionName}
+                    onChange={(e) => setNewExhibitionName(e.target.value)}
+                    placeholder="Enter new exhibition name"
+                  />
+                  <button onClick={handleCreateExhibition}>
+                    Create New Exhibition
+                  </button>
+                </div>
+              </div>
             </div>
           ) : (
             <div className="exhibition-selection">
@@ -157,13 +175,19 @@ const ObjectPage: React.FC = () => {
                 onChange={(e) => setNewExhibitionName(e.target.value)}
                 placeholder="Enter new exhibition name"
               />
-              <button onClick={handleCreateExhibition}>Create New Exhibition</button>
+              <button onClick={handleCreateExhibition}>
+                Create New Exhibition
+              </button>
             </div>
           )}
         </div>
       ) : (
         <p>
-          Please <span className="login-link" onClick={() => setShowLogin(true)}>Sign In</span> to add objects to exhibitions.
+          Please{" "}
+          <span className="login-link" onClick={() => setShowLogin(true)}>
+            Sign In
+          </span>{" "}
+          to add objects to exhibitions.
         </p>
       )}
 
@@ -174,12 +198,20 @@ const ObjectPage: React.FC = () => {
         setShowLogin={setShowLogin}
       />
 
-    <hr className="separator-line" />
+      <hr className="separator-line" />
 
       <div className="object-footer">
         <p>
-          Data provided by Harvard Art Museums API. Visit their 
-          <a href="https://www.harvardartmuseums.org/" target="_blank" rel="noopener noreferrer"> website</a>.
+          Data provided by Harvard Art Museums API. Visit their
+          <a
+            href="https://www.harvardartmuseums.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {" "}
+            website
+          </a>
+          .
         </p>
       </div>
     </div>

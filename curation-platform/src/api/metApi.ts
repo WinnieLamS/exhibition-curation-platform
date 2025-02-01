@@ -1,14 +1,11 @@
 import axios from "axios";
 
-const BASE_URL = "https://api.harvardartmuseums.org";
-const API_KEY = import.meta.env.VITE_HARVARD_API_KEY; 
-
+const BASE_URL = "https://collectionapi.metmuseum.org/public/collection/v1";
 const MAX_OBJECTS = 200;
 const RETRY_LIMIT = 3;
 
-
-export const fetchHarvardData = async (
-  resourceType: "object" | "classification",
+export const fetchMetData = async (
+  resourceType: "objects" | "departments" | "search",
   params: Record<string, any> = {}
 ) => {
   let attempts = 0;
@@ -18,11 +15,10 @@ export const fetchHarvardData = async (
       const response = await axios.get(`${BASE_URL}/${resourceType}`, {
         params: {
           ...params,
-          apikey: API_KEY,
         },
       });
 
-      // console.log(`Successfully fetched ${resourceType} data`, response.data);
+      console.log(`Successfully fetched ${resourceType} data`, response.data);
       return response.data;
     } catch (error: any) {
       attempts++;
@@ -30,11 +26,11 @@ export const fetchHarvardData = async (
       console.error(`API Request Failed (Attempt ${attempts}/${RETRY_LIMIT}):`, error.message);
 
       if (error.response) {
-        console.error("📄 Response Data:", error.response.data);
+        console.error("Response Data:", error.response.data);
       }
 
       if (attempts >= RETRY_LIMIT) {
-        console.error(`Harvard API failed after ${RETRY_LIMIT} attempts for ${resourceType}`);
+        console.error(`Met API failed after ${RETRY_LIMIT} attempts for ${resourceType}`);
         return null; 
       }
 

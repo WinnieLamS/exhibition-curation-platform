@@ -1,36 +1,44 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ClassificationProvider } from "./contexts/ClassificationContext";
+import Layout from "./components/lowerComponents/Layout";
 import HomePage from "./components/HomePage";
 import UserPage from "./components/UserPage";
-import HarvardCollectionPage from "./components/HarvardCollectionPage";
 import MetCollectionPage from "./components/MetCollectionPage";
-import Layout from "./components/lowerComponents/Layout";
-import ClassificationPage from "./components/lowerComponents/ClassificationPage";
+import HarvardCollectionPage from "./components/HarvardCollectionPage";
+import ClassificationPage from "./components/forHarvard/ClassificationPage";
+import MetObjectPage from "./components/forMet/MObjectPage";
+import HarvardObjectPage from "./components/forHarvard/HObjectPage";
 import ExhibitionList from "./components/lowerComponents/ExhibitionList";
-import ObjectPage from "./components/lowerComponents/ObjectPage";
-import { ClassificationProvider } from "./contexts/ClassificationContext";
 import CollectionList from "../src/components/lowerComponents/CollectionList";
-
-
-
 
 const App: React.FC = () => {
   return (
     <ClassificationProvider>
-    <Router>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<HomePage />} />
-          <Route path="/harvard-collection" element={<HarvardCollectionPage />} />
-          <Route path="/classification/:id" element={<ClassificationPage />} />
-          <Route path="/object/:objectid" element={<ObjectPage />} />
-          <Route path="met-collection" element={<MetCollectionPage />} />
-          <Route path="/user-exhibitions" element={<ExhibitionList />} />
-          <Route path="/user-page" element={<UserPage />} />
-          <Route path="/collection-list/:exhibitionId" element={<CollectionList />} />
-        </Route>
-      </Routes>
-    </Router>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<HomePage />} />
+            <Route
+              path="/harvard-collection"
+              element={<HarvardCollectionPage />}
+            />
+            <Route
+              path="/classification/:id"
+              element={<ClassificationPage />}
+            />
+            <Route path="/Hobject/:objectid" element={<HarvardObjectPage />} />
+            <Route path="/Mobject/:objectid" element={<MetObjectPage />} />
+            <Route path="met-collection" element={<MetCollectionPage />} />
+            <Route path="/user-exhibitions" element={<ExhibitionList />} />
+            <Route path="/user-page" element={<UserPage />} />
+            <Route
+              path="/collection-list/:exhibitionId"
+              element={<CollectionList />}
+            />
+          </Route>
+        </Routes>
+      </Router>
     </ClassificationProvider>
   );
 };

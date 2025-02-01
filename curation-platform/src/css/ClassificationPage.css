@@ -1,24 +1,24 @@
-.classification-page {
+.harvard-classification-page {
   padding: 40px;
   text-align: center;
   margin: 0 0 50px 0;
 }
 
-.classification-page h2 {
+.harvard-classification-page h2 {
   margin-bottom: 20px;
   font-size: 1.5rem;
 }
 
-.object-link {
+.harvard-object-link {
   text-decoration: none;
   color: black;
 }
 
-.object-link:hover {
+.harvard-object-link:hover {
   color: gray;
 }
 
-.objects-list {
+.harvard-objects-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
@@ -26,44 +26,44 @@
   margin: 15px 15px 50px 15px;
 }
 
-.object-item {
+.harvard-object-item {
   text-align: center;
   margin: 15px 0;
 }
 
-.object-image {
+.harvard-object-image {
   width: 100%;
   height: auto;
 }
 
 /* Unified style for selectors */
-.selector-container {
+.harvard-selector-container {
   display: flex;
   align-items: center;
   gap: 10px;
   margin-bottom: 20px;
 }
 
-.selector-container label {
+.harvard-selector-container label {
   font-size: 1rem;
 }
 
-.selector-container select {
+.harvard-selector-container select {
   padding: 5px;
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
-.page-controls {
+.harvard-page-controls {
   display: flex;
-  justify-content: space-between; 
+  justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
   flex-wrap: wrap;
 }
 
-.pagination-controls {
+.harvard-pagination-controls {
   margin-top: 20px;
   display: flex;
   justify-content: space-between;

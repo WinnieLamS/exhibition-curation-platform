@@ -67,7 +67,7 @@ const ClassificationPage: React.FC = () => {
 
         setAllObjects(allRecords);
       } catch (err: any) {
-        console.error("❌ API Error:", err);
+        console.error("API Error:", err);
         setError("Failed to load data. Please try again later.");
       } finally {
         setLoading(false);
@@ -116,17 +116,17 @@ const ClassificationPage: React.FC = () => {
   const handleNextPage = () => setPage(Math.min(page + 1, totalPages));
 
   return (
-    <div className="classification-page">
+    <div className="harvard-classification-page">
       <h2>{name}</h2>
-
+  
       {loading ? (
         null
       ) : error ? (
         <p style={{ color: "red" }}>{error}</p>
       ) : (
         <>
-          <div className="page-controls">
-            <div className="page-size-selector">
+          <div className="harvard-page-controls">
+            <div className="harvard-page-size-selector">
               <label htmlFor="pageSize">Objects per page:</label>
               <select
                 id="pageSize"
@@ -138,59 +138,58 @@ const ClassificationPage: React.FC = () => {
                 <option value={12}>12</option>
               </select>
             </div>
-
-            <div className="sort-selector">
+  
+            <div className="harvard-sort-selector">
               <label htmlFor="sortOption">Sort by:</label>
               <select id="sortOption" value={sortOption} onChange={(e) => setSortOption(e.target.value)}>
-              <option value="name-asc">Name (A-Z)</option>
-              <option value="name-desc">Name (Z-A)</option>
-              <option value="date-asc">Date (Oldest First)</option>
-              <option value="date-desc">Date (Newest First)</option>
-              <option value="artist-asc">Artist (A-Z)</option>
-              <option value="artist-desc">Artist (Z-A)</option>
-            </select>
+                <option value="name-asc">Name (A-Z)</option>
+                <option value="name-desc">Name (Z-A)</option>
+                <option value="date-asc">Date (Oldest First)</option>
+                <option value="date-desc">Date (Newest First)</option>
+                <option value="artist-asc">Artist (A-Z)</option>
+                <option value="artist-desc">Artist (Z-A)</option>
+              </select>
             </div>
           </div>
-
-          
-          <div className="objects-list">
+  
+          <div className="harvard-objects-list">
             {displayedObjects.map((obj, index) => (
-              <div key={index} className="object-item">
-                <Link to={`/object/${obj.objectid}`} className="object-link">
+              <div key={index} className="harvard-object-item">
+                <Link to={`/Hobject/${obj.objectid}`} className="harvard-object-link">
                   <img
                     src={obj.primaryimageurl || "/placeholder.png"}
                     alt={obj.title || "Artwork"}
-                    className="object-image"
+                    className="harvard-object-image"
                   />
                   <p>{obj.title || "Untitled"}</p>
                 </Link>
               </div>
             ))}
           </div>
-
-          <hr className="separator-line" />
-
-          <div className="pagination-controls">
-          <button onClick={handlePreviousPage} disabled={page === 1}>
-            Previous
-          </button>
-
-          <select value={page} onChange={(e) => setPage(Number(e.target.value))}>
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNumber) => (
-              <option key={pageNumber} value={pageNumber}>
-                Page {pageNumber}
-              </option>
-            ))}
-          </select>
-
-          <button onClick={handleNextPage} disabled={page >= totalPages}>
-            Next
-          </button>
+  
+          <hr className="harvard-separator-line" />
+  
+          <div className="harvard-pagination-controls">
+            <button onClick={handlePreviousPage} disabled={page === 1}>
+              Previous
+            </button>
+  
+            <select value={page} onChange={(e) => setPage(Number(e.target.value))}>
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNumber) => (
+                <option key={pageNumber} value={pageNumber}>
+                  Page {pageNumber}
+                </option>
+              ))}
+            </select>
+  
+            <button onClick={handleNextPage} disabled={page >= totalPages}>
+              Next
+            </button>
           </div>
         </>
       )}
     </div>
-  );
+  );  
 };
 
 export default ClassificationPage;

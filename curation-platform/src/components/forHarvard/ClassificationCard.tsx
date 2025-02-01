@@ -8,7 +8,10 @@ interface ClassificationCardProps {
   id: number;
 }
 
-const ClassificationCard: React.FC<ClassificationCardProps> = ({ name, id }) => {
+const ClassificationCard: React.FC<ClassificationCardProps> = ({
+  name,
+  id,
+}) => {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -19,7 +22,7 @@ const ClassificationCard: React.FC<ClassificationCardProps> = ({ name, id }) => 
         const data = await fetchHarvardData("object", {
           classification: id,
           page: 1,
-          size: 1, 
+          size: 1,
         });
         const object = data.records?.[0];
         setImageUrl(object?.primaryimageurl || null);
@@ -34,16 +37,15 @@ const ClassificationCard: React.FC<ClassificationCardProps> = ({ name, id }) => 
   }, [id, name]);
 
   return (
-    <Link to={`/classification/${id}?name=${encodeURIComponent(name)}`} className="classification-card">
+    <Link
+      to={`/classification/${id}?name=${encodeURIComponent(name)}`}
+      className="classification-card"
+    >
       <div>
         {loading ? (
           <p>Loading...</p>
         ) : imageUrl ? (
-          <img
-            src={imageUrl}
-            alt={name}
-            className="classification-image"
-          />
+          <img src={imageUrl} alt={name} className="classification-image" />
         ) : (
           <p>No image available</p>
         )}

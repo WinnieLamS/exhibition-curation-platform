@@ -20,21 +20,42 @@ const HomePage: React.FC = () => {
   return (
     <div className="homepage">
       <main className="main-content">
-        <div className="image-links">
-          <Link to="/harvard-collection" className="image-container">
+      {isLoggedIn ? 
+        (
+          <Link to="/user-page" className="image-container">
             <img
-              src="/assets/harvard.jpg"
-              alt="Harvard Art Museums Collection"
+              src={user?.avatar}
+              alt="User Page"
+              style={{
+                width: "100px",
+                height: "100px",
+                borderRadius: "50%",
+                cursor: "pointer",
+              }}
               className="link-image"
             />
-            <div className="overlay">
-              <img 
-                src="/assets/HarvardLogo.jpeg" 
-                alt="Harvard Art Museums Collection" 
-                className="link-image"/>
-            </div>
+            <div className="overlay">User Page</div>
+          </Link> 
+        ):(
+          <Link
+            to="/user-page"
+            className="image-container"
+            onClick={handleUserPageClick}
+          >
+            <img
+              src="/assets/add.png"
+              alt="User Page"
+              style={{
+                width: "100px",
+                height: "100px",
+                borderRadius: "50%",
+                cursor: "pointer",
+              }}
+              className="link-image"
+            />
+            <div className="overlay">User Page</div>
           </Link>
-        </div>
+        )}
         <div className="image-links">
           <Link to="/met-collection" className="image-container">
             <img
@@ -51,30 +72,22 @@ const HomePage: React.FC = () => {
           </Link>
         </div>
         <div className="image-links">
-        {isLoggedIn ? 
-        (
-          <Link to="/user-page" className="image-container">
+          <Link to="/harvard-collection" className="image-container">
             <img
-              src={user?.avatar}
-              alt="User Page"
+              src="/assets/harvard.jpg"
+              alt="Harvard Art Museums Collection"
               className="link-image"
             />
-            <div className="overlay">User Page</div>
-          </Link> 
-        ):(
-          <Link
-            to="/user-page"
-            className="image-container"
-            onClick={handleUserPageClick}
-          >
-            <img
-              src="/assets/add.png"
-              alt="User Page"
-              className="link-image"
-            />
-            <div className="overlay">User Page</div>
+            <div className="overlay">
+              <img 
+                src="/assets/HarvardLogo.jpeg" 
+                alt="Harvard Art Museums Collection" 
+                className="link-image"/>
+            </div>
           </Link>
-        )}
+        </div>
+        
+        <div className="image-links">
         </div>
       </main>
       
