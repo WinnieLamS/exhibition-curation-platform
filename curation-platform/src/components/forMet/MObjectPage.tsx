@@ -207,7 +207,7 @@ const MObjectPage: React.FC = () => {
 
       <div className="object-footer">
         <p>
-          Data provided by The Met. Visit their
+        Data provided by Metropolitan Museum of Art API. Visit their
           <a
             href="https://www.metmuseum.org/"
             target="_blank"
