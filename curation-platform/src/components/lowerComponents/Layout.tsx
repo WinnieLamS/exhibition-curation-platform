@@ -39,6 +39,8 @@ const Layout: React.FC = () => {
     };
   }, []);
 
+  console.log(user);
+  
   return (
     <div className="layout">
       <header className={`header ${!isVisible ? "hidden" : ""}`}>

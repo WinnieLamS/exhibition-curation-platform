@@ -2,6 +2,7 @@ import React, { createContext, useState, useContext, useEffect } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import db from "../firebase/firestore";
 import { doc, getDoc } from "firebase/firestore";
+import bunny from "../../src/assets/avatar/bunny.jpg";
 
 interface User {
   id: string;
@@ -35,7 +36,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
             id: firebaseUser.uid,
             username: userDoc.data().username,
             email: firebaseUser.email!,
-            avatar: userDoc.data().avatar || "",
+            avatar: userDoc.data().avatar || bunny,
           });
         }
       } else {

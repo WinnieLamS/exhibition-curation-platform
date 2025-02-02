@@ -57,6 +57,7 @@ const SignInSignUpCard: React.FC<SignInSignUpCardProps> = ({
     e.preventDefault();
     try {
       const user = await signInUser(email, password); 
+      
       console.log("User signed in successfully");
 
       onClose(); 

@@ -8,7 +8,7 @@ This project is built using **React (Vite) + TypeScript** and integrates **Fireb
 ---
 ## Hosted Version
 
-The deployed version of this frontend can be accessed at [Exhibition Curation Platform](https://exhibition-curation-platform.firebaseapp.com/ ).
+The deployed version of this frontend can be accessed at [Exhibition Curation Platform](https://exhibition-curation-platform.web.app/).
 
 #### For functional testing, you can use:
 Email: `test@gmail.com` 
