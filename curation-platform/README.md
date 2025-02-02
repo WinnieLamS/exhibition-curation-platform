@@ -6,6 +6,15 @@ The **Exhibition Curation Platform** is a web application designed to help users
 This project is built using **React (Vite) + TypeScript** and integrates **Firebase** for authentication, Firestore for database management, and Firebase Storage for user avatars.
 
 ---
+## Hosted Version
+
+The deployed version of this frontend can be accessed at [Exhibition Curation Platform](https://exhibition-curation-platform.firebaseapp.com/ ).
+
+#### For functional testing, you can use:
+Email: `test@gmail.com` 
+Password: `testing`
+
+---
 
 ## 🚀 Getting Started
 
@@ -32,7 +41,7 @@ npm install
         4. Click Regenerate Key (this will invalidate the exposed one).
         5. Update your .env file with the new key.
 
-2. Create a **`.env`** file in the root directory and add your **Firebase configuration** and Harvard Art Museums API Key:
+2. Create a **`.env`** file in the root directory and add your **Firebase configuration** and **Harvard Art Museums API Key**:
 ```env
 VITE_FIREBASE_API_KEY=your-api-key
 VITE_FIREBASE_AUTH_DOMAIN=your-app.firebaseapp.com

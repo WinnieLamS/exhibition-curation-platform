@@ -9,8 +9,8 @@ import bunny from "../../assets/avatar/bunny.jpg";
 interface SignInSignUpCardProps {
   visible: boolean;
   onClose: () => void;
-  setUser: (user: any) => void; // Callback to set the user context or parent state
-  setShowLogin?: (show: boolean) => void; // Optional callback for managing modal visibility
+  setUser: (user: any) => void; 
+  setShowLogin?: (show: boolean) => void; 
 }
 
 
@@ -45,8 +45,8 @@ const SignInSignUpCard: React.FC<SignInSignUpCardProps> = ({
       });
       console.log("User data stored in Firestore");
 
-      onClose(); // Close the modal
-      navigate("/user-page"); // Redirect after sign-up
+      onClose(); 
+      navigate("/user-page"); 
     } catch (err: any) {
       setError(err.message);
     }
@@ -59,8 +59,8 @@ const SignInSignUpCard: React.FC<SignInSignUpCardProps> = ({
       const user = await signInUser(email, password); 
       console.log("User signed in successfully");
 
-      onClose(); // Close the modal after sign-in
-      setUser(user); // Set user in the context
+      onClose(); 
+      setUser(user); 
 
     } catch (err: any) {
       setError(err.message);

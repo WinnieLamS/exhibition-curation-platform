@@ -1,6 +1,6 @@
 .homepage {
   text-align: center;
-  padding-right: 1rem; 
+  /* padding-right: 2rem; */
 }
 
 .main-content {
@@ -8,7 +8,8 @@
   justify-content: center;
   gap: 2rem;
   flex-wrap: wrap;
-  padding-right: 1rem; 
+  /* padding-right: 1rem; */
+  width: 100%; 
 }
 
 .image-links {
@@ -18,11 +19,12 @@
   width: 100%;
   max-width: 800px;
   margin: 1rem;
+  padding-right: 0;
 }
 
 .image-container {
   position: relative;
-  width: 100%;
+  width: 100%; 
   overflow: hidden;
 }
 
@@ -30,7 +32,7 @@
   width: 100%;
   height: auto;
   transition: transform 0.3s ease;
-  max-width: 100%;
+  object-fit: cover; 
 }
 
 .overlay {
@@ -53,18 +55,12 @@
 .image-container:hover .overlay {
   opacity: 0.7;
 }
-/* 
-.overlay-image {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-} */
 
 @media (max-width: 768px) {
   .main-content {
     flex-direction: column;
     align-items: center;
-    padding-right: 0; 
+    padding-right: 0;
   }
 
   .image-links {
@@ -75,20 +71,10 @@
   .overlay {
     font-size: 14px;
   }
-
-  .overlay-image {
-    width: 80%; /* Adjust image size to be responsive */
-    height: auto;
-  }
 }
 
 @media (max-width: 480px) {
   .overlay {
     font-size: 12px;
-  }
-
-  .overlay-image {
-    width: 70%; /* Adjust further for very small screens */
-    height: auto;
   }
 }

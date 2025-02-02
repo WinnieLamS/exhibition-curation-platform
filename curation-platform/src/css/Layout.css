@@ -1,24 +1,40 @@
-.layout {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  padding-right: 20px; 
+.header, .footer {
+  margin: 0;
+  width: 100%; 
+  padding-left: 0; 
+  padding-right: 0; 
 }
-
 .header {
-  color: #686868;
-  text-shadow: 0.5px 0.5px white;
-  position: fixed; 
-  margin: 0 20px;
+  color: #000000;
+  background-color: #333;
+  position: fixed;
   top: 0;
   z-index: 1000;
-  width: calc(100% - 40px); 
+  display: flex;
+  align-items: center; 
+  padding-right: 60px;
+  padding-left: 20px;
 }
 
 .header-link {
   text-decoration: none;
-  color: #686868;
+  color: #b2b2b2;
   display: block;
+  flex-grow: 1; 
+}
+
+.user-image-container {
+  position: absolute;
+  top: 50%;
+  right: 100px; 
+  transform: translateY(-50%); 
+}
+
+.user-link-image {
+  width: 70px; 
+  height: 70px;
+  border-radius: 50%;
+  cursor: pointer;
 }
 
 .loading_container {
@@ -33,40 +49,52 @@
 
 .main-content {
   flex: 1;
-  padding: 3rem 20px; 
+  padding: 3rem 20px;
   flex-direction: column;
-  align-items: center; 
+  align-items: center;
   justify-content: flex-start;
   width: 100%;
-  margin-top: 10px; 
+  margin-top: 10px;
 }
 
 .footer {
   background-color: #333;
   color: white;
-  position: fixed; 
+  position: fixed;
   width: 100%;
   bottom: 0;
   z-index: 1000;
   text-align: center;
-  padding: 1rem 20px; 
-  box-sizing: border-box; 
+  padding: 0 20px;
+  box-sizing: border-box;
 }
 
 @media (max-width: 768px) {
   .header {
-    margin: 0 10px; 
-    width: calc(100% - 20px); 
+    margin: 0 10px;
+    width: calc(100% - 20px);
+    padding-left: 20px; 
+    padding-right: 20px;
   }
 
   .main-content {
     padding: 2rem 10px;
-    margin-top: 10px;
+    margin-top: 60px; 
     margin-bottom: 50px;
   }
 
   .footer {
-    padding: 0 10px; 
+    padding: 0 10px;
+  }
+
+  .user-image-container {
+    bottom: 60px;
+    right: 10px; 
+  }
+
+  .user-link-image {
+    width: 60px; 
+    height: 60px;
   }
 }
 
@@ -74,14 +102,26 @@
   .header {
     margin: 0 5px;
     width: calc(100% - 10px);
+    padding-left: 15px; 
+    padding-right: 15px;
   }
 
   .main-content {
-    padding: 1.5rem 5px;
+    padding: 0 5px;
     margin-top: 100px; 
   }
 
   .footer {
-    padding: 0 5px;
+    padding: 0 10px;
+  }
+
+  .user-image-container {
+    bottom: 60px;
+    right: 50px; 
+  }
+
+  .user-link-image {
+    width: 50px;
+    height: 50px;
   }
 }
