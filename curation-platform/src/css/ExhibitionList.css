@@ -81,18 +81,26 @@
 @media (max-width: 1200px) {
   .exhibitions-list {
     grid-template-columns: repeat(3, 1fr); 
+    margin: 15px; 
   }
 }
 
 @media (max-width: 900px) {
   .exhibitions-list {
     grid-template-columns: repeat(2, 1fr); 
+    margin: 10px; 
   }
 }
 
 @media (max-width: 600px) {
+  .exhibition-page {
+    margin: 0 20px; 
+    padding: 20px;
+  }
+
   .exhibitions-list {
-    grid-template-columns: 1fr; 
+    grid-template-columns: 1fr;
+    margin: 0; 
   }
 
   .selector-container {
@@ -119,5 +127,10 @@
 
   .exhibition-page h3 {
     font-size: 0.9rem; 
+  }
+
+  .exhibition-page {
+    margin: 0 10px; 
+    padding: 10px; 
   }
 }

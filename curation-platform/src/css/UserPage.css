@@ -1,21 +1,19 @@
-
 .user-page {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding-top: 60px; 
-  padding-left: 20px;
+  padding-top: 60px;
+  padding-left: 20px; 
   padding-right: 20px;
   padding-bottom: 20px;
-  min-height: 100vh; 
+  min-height: 100vh;
 }
 
-
 .user-container {
-  max-width: 1200px; 
+  max-width: 1200px;
   width: 100%;
-  margin: 0 auto; 
+  margin: 0 auto;
 }
 
 .user-page img {
@@ -43,8 +41,8 @@
 .user-page .button-group {
   display: flex;
   gap: 10px;
-  flex-wrap: wrap; 
-  justify-content: center; 
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .user-page button {
@@ -70,24 +68,24 @@
   margin: 5px 0 10px 0;
   padding: 8px;
   font-size: 16px;
-  width: 100%; 
-  max-width: 400px; 
+  width: 100%;
+  max-width: 400px;
   border-radius: 4px;
   border: 1px solid #ccc;
 }
 
 @media (max-width: 768px) {
   .user-page {
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 20px; 
+    padding-right: 10px; 
   }
 
   .user-page input {
-    width: 100%; 
+    width: 100%;
   }
 
   .user-page .button-group {
-    flex-direction: column; 
+    flex-direction: column;
     align-items: center;
   }
 

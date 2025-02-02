@@ -4,7 +4,7 @@
   color: inherit;
   overflow: hidden;
   transition: transform 0.2s ease;
-  
+  width: 100%; 
 }
 
 .classification-card:hover {
@@ -20,4 +20,28 @@
 .classification-card h3 {
   text-align: right;
   margin: 5px 0 10px 0;
+  font-size: 1.2rem; 
+}
+
+@media (max-width: 768px) {
+  .classification-card {
+    width: 100%; 
+    padding: 10px; 
+  }
+
+  .classification-card h3 {
+    text-align: left; 
+    font-size: 1.1rem; 
+  }
+}
+
+@media (max-width: 480px) {
+  .classification-card {
+    padding: 5px; 
+  }
+
+  .classification-card h3 {
+    font-size: 1rem; 
+    margin: 5px 0; 
+  }
 }

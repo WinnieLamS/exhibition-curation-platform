@@ -70,7 +70,7 @@
   object-fit: contain; 
   margin-right: 20px;
   max-width: 100%;
-  max-height: 200px; 
+  max-height: 200px;
 }
 
 .custom-object-item p {
@@ -109,7 +109,6 @@
   color: #777;
 }
 
-/* Media Queries for responsiveness */
 @media (max-width: 1024px) {
   .custom-collection-header h1 {
     font-size: 1.8rem;
@@ -121,8 +120,8 @@
   }
 
   .custom-object-image {
-    width: 120px;
-    height: 120px;
+    width: 180px; 
+    height: auto;
     margin-right: 0;
     margin-bottom: 10px;
   }
@@ -144,8 +143,8 @@
   }
 
   .custom-object-image {
-    width: 100px;
-    height: 100px;
+    width: 150px; 
+    height: auto;
   }
 
   .custom-object-item p {
@@ -178,8 +177,8 @@
   }
 
   .custom-object-image {
-    width: 100px;
-    height: 100px;
+    width: 150px; 
+    height: auto;
     margin-bottom: 10px;
   }
 

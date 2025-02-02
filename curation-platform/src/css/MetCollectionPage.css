@@ -1,11 +1,10 @@
-/* Met Collection page styles */
 .met-container {
   padding: 40px;
   text-align: center;
   margin: 0 0 50px 0;
 }
 
-.met-object-link{
+.met-object-link {
   text-decoration: none;
   color: black;
 }
@@ -81,4 +80,68 @@
 
 .met-page-button:hover:not(:disabled) {
   background-color: #45a049;
+}
+
+@media (max-width: 1024px) {
+  .met-container h1 {
+    font-size: 1.8rem; 
+  }
+
+  .met-selector-container {
+    flex-direction: column; 
+    align-items: flex-start; 
+  }
+
+  .met-objects-list {
+    grid-template-columns: repeat(3, 1fr); 
+  }
+
+  .met-object-image {
+    max-height: 350px; 
+  }
+}
+
+@media (max-width: 768px) {
+  .met-container h1 {
+    font-size: 1.6rem; 
+  }
+
+  .met-selector-container {
+    gap: 5px; 
+  }
+
+  .met-objects-list {
+    grid-template-columns: repeat(2, 1fr); 
+  }
+
+  .met-object-image {
+    max-height: 300px; 
+  }
+
+  .met-page-button {
+    width: 100%;
+    padding: 12px; 
+  }
+}
+
+@media (max-width: 480px) {
+  .met-container h1 {
+    font-size: 1.4rem; 
+  }
+
+  .met-selector-container {
+    gap: 10px;
+  }
+
+  .met-objects-list {
+    grid-template-columns: 1fr; 
+  }
+
+  .met-object-image {
+    max-height: 250px; 
+  }
+
+  .met-page-button {
+    padding: 15px;
+  }
 }
