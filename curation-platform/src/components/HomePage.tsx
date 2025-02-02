@@ -43,7 +43,7 @@ const HomePage: React.FC = () => {
             onClick={handleUserPageClick}
           >
             <img
-              src="/assets/add.png"
+              src="/assets/user.png"
               alt="User Page"
               style={{
                 width: "100px",
@@ -59,7 +59,7 @@ const HomePage: React.FC = () => {
           {user?(
             <h3>Hello {user.username}!</h3>
           ):(
-            <h3>Sign in / Sign up</h3>
+            null
           )}
         </div>
         <hr className="separator-line" />
