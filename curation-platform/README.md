@@ -25,17 +25,12 @@ npm install
 ### 3️⃣ Set Up Environment Variables
 1. Generate Firebase API Keys
 
-          How to Regenerate Firebase API Keys:
-
-          1️⃣ Go to Firebase Console → Firebase Settings
-
-          2️⃣ Click Project Settings (gear icon ⚙️)
-
-          3️⃣ Scroll down to "Web API Key"
-
-          4️⃣ Click Regenerate Key (this will invalidate the exposed one).
-
-          5️⃣ Update your .env file with the new key.
+        How to Regenerate Firebase API Keys:
+        1. Go to Firebase Console → Firebase Settings
+        2. Click Project Settings (gear icon ⚙️)
+        3. Scroll down to "Web API Key"
+        4. Click Regenerate Key (this will invalidate the exposed one).
+        5. Update your .env file with the new key.
 
 2. Create a **`.env`** file in the root directory and add your **Firebase configuration** and Harvard Art Museums API Key:
 ```env

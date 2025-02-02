@@ -3,7 +3,7 @@ import axios from "axios";
 const BASE_URL = "https://api.harvardartmuseums.org";
 const API_KEY = import.meta.env.VITE_HARVARD_API_KEY; 
 
-const MAX_OBJECTS = 200;
+// const MAX_OBJECTS = 200;
 const RETRY_LIMIT = 3;
 
 

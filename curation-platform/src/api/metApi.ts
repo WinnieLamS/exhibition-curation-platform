@@ -1,13 +1,11 @@
 import axios from "axios";
 
 const BASE_URL = "https://collectionapi.metmuseum.org/public/collection/v1";
-const MAX_OBJECTS = 200;
+// const MAX_OBJECTS = 200;
 const RETRY_LIMIT = 3;
 
-export const fetchMetData = async (
-  resourceType: "objects" | "departments" | "search",
-  params: Record<string, any> = {}
-) => {
+export const fetchMetData = async (resourceType: string, params: Record<string, any> = {}) => {
+
   let attempts = 0;
 
   while (attempts < RETRY_LIMIT) {

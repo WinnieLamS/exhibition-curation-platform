@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { fetchMetData } from "../api/metApi";// Assuming similar component exists for Met
 import "./../css/MetCollectionPage.css";
-import { useLoading } from "../contexts/LoadingContext";
+// import { useLoading } from "../contexts/LoadingContext";
 
 const MetCollectionPage = () => {
   const [objects, setObjects] = useState<any[]>([]);
@@ -27,9 +27,9 @@ const MetCollectionPage = () => {
     setLoading(true);
     const params = {
       departmentId: selectedDepartment,
-      q: "",  // Empty query to fetch all objects
+      q: "", 
       limit: itemsPerPage,
-      offset: (currentPage - 1) * itemsPerPage, // Offset for pagination
+      offset: (currentPage - 1) * itemsPerPage, 
     };
 
     const data = await fetchMetData("search", params);

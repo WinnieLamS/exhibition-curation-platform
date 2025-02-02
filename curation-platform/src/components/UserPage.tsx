@@ -95,7 +95,10 @@ const UserPage: React.FC = () => {
                   borderRadius: "50%",
                   cursor: "pointer",
                 }}
-                onClick={() => setSelectedAvatar(bunny)}
+                onClick={() => {
+                  setSelectedAvatar(bunny);
+                  setAvatarFile(null);
+                }}
               />
               <img
                 src={kitten}
@@ -106,7 +109,10 @@ const UserPage: React.FC = () => {
                   borderRadius: "50%",
                   cursor: "pointer",
                 }}
-                onClick={() => setSelectedAvatar(kitten)}
+                onClick={() => {
+                  setSelectedAvatar(kitten);
+                  setAvatarFile(null);
+                }}
               />
               <img
                 src={piggy}
@@ -117,7 +123,10 @@ const UserPage: React.FC = () => {
                   borderRadius: "50%",
                   cursor: "pointer",
                 }}
-                onClick={() => setSelectedAvatar(piggy)}
+                onClick={() => {
+                  setSelectedAvatar(piggy);
+                  setAvatarFile(null);
+                }}
               />
               <img
                 src={puppy}
@@ -128,7 +137,10 @@ const UserPage: React.FC = () => {
                   borderRadius: "50%",
                   cursor: "pointer",
                 }}
-                onClick={() => setSelectedAvatar(puppy)}
+                onClick={() => {
+                  setSelectedAvatar(puppy);
+                  setAvatarFile(null);
+                }}
               />
               <img
                 src={guieaPig}
@@ -139,7 +151,10 @@ const UserPage: React.FC = () => {
                   borderRadius: "50%",
                   cursor: "pointer",
                 }}
-                onClick={() => setSelectedAvatar(guieaPig)}
+                onClick={() => {
+                  setSelectedAvatar(guieaPig);
+                  setAvatarFile(null);
+                }}
               />
             </div>
           </div>
